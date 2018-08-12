@@ -1,4 +1,4 @@
-# teracy-dev-v0-5-migration
+# teracy-dev-v05-migration
 
 The extension to use to help to migrate teracy-dev from v0.5 to teracy-dev v0.6 easily by moving
 the backup the supported features from v0.5 to this extension.
@@ -16,9 +16,9 @@ teracy-dev:
   extensions:
     - _id: "entry-0"
       path:
-        extension: teracy-dev-v0-5-migration
+        extension: teracy-dev-v05-migration
       location:
-        git: https://github.com/hoatle/teracy-dev-v0-5-migration.git
+        git: https://github.com/hoatle/teracy-dev-v05-migration.git
         branch: develop
       require_version: ">= 0.1.0-SNAPSHOT"
       enabled: true
@@ -37,8 +37,8 @@ teracy-dev:
       path:
         lookup: workspace # use workspace directory to lookup for this extension
       location:
-        git: git@github.com:hoatle/teracy-dev-v0-5-migration.git # your forked repo
+        git: git@github.com:hoatle/teracy-dev-v05-migration.git # your forked repo
 ```
 
-With this override configuration, you tells `teracy-dev` to use the `teracy-dev-v0-5-migration` extension
+With this override configuration, you tells `teracy-dev` to use the `teracy-dev-v05-migration` extension
 from the `workspace` directory
