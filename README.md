@@ -17,7 +17,7 @@ teracy-dev:
       path:
         extension: teracy-dev-v05-compat
       location:
-        git: https://github.com/hoatle/teracy-dev-v05-compat.git
+        git: https://github.com/teracyhq-incubator/teracy-dev-v05-compat.git
         branch: develop
       require_version: ">= 0.1.0-SNAPSHOT"
       enabled: true
