@@ -1,1 +1,21 @@
 config_override.yaml
+
+###
+# Ignore Chef key files and secrets
+###
+.chef/*.pem
+.chef/encrypted_data_bag_secret
+
+.vagrant
+
+# Ignore workspace sub directories
+workspace/*
+!workspace/.gitkeep
+
+home/.virtualenvs/*
+!home/.virtualenvs/.gitkeep
+
+home/.docker/*
+!home/.docker/.gitkeep
+
+nodes/*.json
