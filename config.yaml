@@ -44,10 +44,7 @@ nodes:
           guest: "/home/vagrant/workspace"
           rsync__exclude:
             - ".git"
-            - ".idea/"
-            - "node_modules/"
-            - "bower_components/"
-            - ".npm/"
+            - ".idea"
             - ".#*"
     provisioners:
       - _id: 'v05-compat-0'
