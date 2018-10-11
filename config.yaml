@@ -1,0 +1,135 @@
+vagrant:
+  # vagrant plugins are actually rubygems so you can declare to use any rubygems
+  # common config level
+  plugins:
+    - _id: "essential-0"
+      enabled: true
+      state: installed
+    - _id: "v05-compat-0"
+      name: vagrant-gatling-rsync
+      version: "" # empty means latest by default
+      state: installed # uninstalled
+      enabled: true
+      config_key: gatling
+      options:
+        latency: 0.5
+        time_format: "%%H:%%M:%%S"
+        rsync_on_startup: true
+    - _id: "v05-compat-1"
+      name: vagrant-rsync-back
+      version: "" # empty means latest by default
+      state: installed # uninstalled
+      enabled: true
+      config_key: gatling
+      options:
+        latency: 0.5
+        time_format: "%%H:%%M:%%S"
+        rsync_on_startup: true
+
+default:
+  vm:
+    networks:
+      - _id: "v05-compat-0"
+        type: "public_network"
+    synced_folders:
+      - _id: "v05-compat-0"
+        type: rsync
+        host: "./workspace"
+        guest: "/home/vagrant/workspace"
+        rsync__exclude:
+        - ".git"
+        - ".idea/"
+        - node_modules/
+        - bower_components/
+        - ".npm/"
+        - ".#*"
+  provisioners:
+    - _id: 'v05-compat-0'
+      version: 13.1.31
+      type: chef_solo
+      log_level: info
+      enabled: true
+      # Please update right cookbooks, role, nodes, data_bags and run_list path in you entry config
+      cookbooks_path:
+        - "%{teracy-dev-v05-compat-path}/provisioners/chef_solo/vendor-cookbooks"
+        - "%{teracy-dev-v05-compat-path}/provisioners/chef_solo/main-cookbooks"
+      roles_path: "%{teracy-dev-v05-compat-path}/provisioners/chef_solo/roles"
+      nodes_path: "%{teracy-dev-v05-compat-path}/provisioners/chef_solo/nodes"
+      data_bags_path: "%{teracy-dev-v05-compat-path}/provisioners/chef_solo/data_bags"
+      run_list:
+      - vim
+      - teracy-dev
+      json:
+        docker:
+          enabled: true
+          version: ''
+          package_options: "--force-yes -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-all'"
+          repo: main
+          members:
+          - vagrant
+          action: create
+        docker_registry:
+          force: false
+          entries: []
+        docker_compose:
+          version: ''
+          enabled: true
+        docker_machine:
+          enabled: false
+          release: v0.8.2
+        teracy-dev:
+          directories:
+          - _id: 'v05-compat-0'
+            path: "/home/vagrant/workspace"
+            owner: vagrant
+            group: vagrant
+            mode: '0775'
+            action: create
+          aliases:
+          - _id: 'v05-compat-0'
+            name: ws
+            command: cd ~/workspace
+            action: add
+          - _id: 'v05-compat-1'
+            name: ctop
+            command: docker run -ti --name ctop --rm -v /var/run/docker.sock:/var/run/docker.sock
+              quay.io/vektorlab/ctop:latest
+            action: add
+          - _id: 'v05-compat-2'
+            name: http
+            command: docker container run -it --rm --net=host teracy/httpie-jwt-auth:latest-alpine
+            action: add
+          - _id: 'v05-compat-3'
+            name: https
+            command: http --default-scheme=https
+            action: add
+          env_vars:
+          - _id: 'v05-compat-0'
+            key: EDITOR
+            value: vim
+            action: add
+          inotify:
+            max_user_watches: 524288
+          proxy:
+            enabled: true
+            certs:
+              enabled: true
+              sources:
+              - nginx/certs/default.crt
+              - nginx/certs/default.key
+              destination: "/etc/nginx/certs"
+              owner: vagrant
+              group: vagrant
+              mode: '0644'
+            container:
+              enabled: false
+              name: nginx-proxy
+              repo: jwilder/nginx-proxy
+              tag: alpine
+              volumes:
+              - "/var/run/docker.sock:/tmp/docker.sock:ro"
+              - "/etc/nginx/certs:/etc/nginx/certs"
+              restart_policy: always
+              port:
+              - 80:80
+              - 443:443
