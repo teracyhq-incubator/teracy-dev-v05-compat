@@ -26,18 +26,18 @@ teracy-dev:
 
 ## How to develop
 
-Configure `workspace/teracy-dev-entry/config_override.yaml` with the follow similar content:
+You should configure the forked git repo into the `workspace` directory by adding the following
+similar content into `workspace/teracy-dev-entry/config_override.yaml`:
 
 
 ```yaml
 teracy-dev:
   extensions:
-    - _id: "entry-0"
+    - _id: "entry-0" # must match the _id configured from the config_default.yaml file
       path:
         lookup: workspace # use workspace directory to lookup for this extension
       location:
         git: git@github.com:hoatle/teracy-dev-v05-compat.git # your forked repo
+        branch: develop
+      require_version: ">= 0.1.0-SNAPSHOT"
 ```
-
-With this override configuration, you tells `teracy-dev` to use the `teracy-dev-v05-compat` extension
-from the `workspace` directory
