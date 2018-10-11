@@ -6,6 +6,17 @@ So when this extension is used for teracy-dev v0.6, `teracy-dev` will have all t
 from v0.5
 
 
+## Dependencies
+
+This extension requires:
+
+- teracy-dev:           >= 0.6.0-a4
+- teracy-dev-core:      >= 0.4.0-SNAPSHOT
+- teracy-dev-essential: >= 0.1.0
+
+See the `manifest.yaml` file for more information.
+
+
 ## How to use
 
 Configure `workspace/teracy-dev-entry/config_default.yaml` with the following similar content:
