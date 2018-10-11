@@ -29,15 +29,16 @@ The following platforms have been tested with Test Kitchen: You may be
 able to get it working on other platforms, with appropriate
 configuration of cgroups and storage back ends.
 
-|              | 1.7.1 | 1.8.3 | 1.9.1 | 1.10.3 | 1.11.1 | 1.12.3 |
-|--------------|:-----:|:------|:-----:|:------:|:------:|:------:|
-| debian-7     | ✔     | ✔     | ✔     | ✔      | ✔      | ✔      |
-| debian-8     | ✔     | ✔     | ✔     | ✔      | ✔      | ✔      |
-| centos-7     | ✔     | ✔     | ✔     | ✔      | ✔      | ✔      |
-| fedora       |       |       | ✔     | ✔      | ✔      | ✔      |
-| ubuntu-12.04 | ✔     | ✔     | ✔     | ✔      | ✔      | ✔      |
-| ubuntu-14.04 | ✔     | ✔     | ✔     | ✔      | ✔      | ✔      |
-| ubuntu-16.04 |       |       |       |        | ✔      | ✔      |
+|              | 1.7.1 | 1.8.3 | 1.9.1 | 1.10.3 | 1.11.1 | 1.12.3 | 1.13.0 |
+|--------------|:-----:|:------|:-----:|:------:|:------:|:------:|:-------|
+| amazon linux |       |       |       |        |        |        | ✔      |
+| debian-7     | ✔     | ✔     | ✔     | ✔      | ✔      | ✔      | ✔      |
+| debian-8     | ✔     | ✔     | ✔     | ✔      | ✔      | ✔      | ✔      |
+| centos-7     | ✔     | ✔     | ✔     | ✔      | ✔      | ✔      | ✔      |
+| fedora       |       |       | ✔     | ✔      | ✔      | ✔      | ✔      |
+| ubuntu-12.04 | ✔     | ✔     | ✔     | ✔      | ✔      | ✔      | ✔      |
+| ubuntu-14.04 | ✔     | ✔     | ✔     | ✔      | ✔      | ✔      | ✔      |
+| ubuntu-16.04 |       |       |       |        | ✔      | ✔      | ✔      |
 
 
 ## Cookbook Dependencies
@@ -212,7 +213,6 @@ resources with the provider resolution system.
 
 ```ruby
 docker_installation 'default' do
-  repo 'test'
   action :create
 end
 ```
@@ -295,7 +295,7 @@ system's package repositories. The `chef-yum-docker` and
 `chef-apt-docker` Supermarket cookbooks are used to do this in
 test-kitchen.
 
-This is the recommended production installation method.
+**_This is the recommended production installation method._**
 
 ### Example
 
@@ -418,15 +418,10 @@ The `docker_service` resource property list mostly corresponds to the
 options found in the
 [Docker Command Line Reference](https://docs.docker.com/reference/commandline/cli/)
 
-- `source` - URL to the pre-compiled Docker binary used for
-  installation. Defaults to a calculated URL based on kernel version,
-  Docker version, and platform arch. By default, this will try to get
-  to "<http://get.docker.io/builds/>".
+- `install_method` - Select binary, script, package, tarball, none, or auto. Defaults to  `auto`.
+- `source` - URL to the pre-compiled Docker binary used for installation. Defaults to a calculated URL based on kernel version, Docker version, and platform arch. By default, this will try to get to "<http://get.docker.io/builds/>".
 - `version` - Docker version to install
 - `checksum` - sha256 checksum of Docker binary
-- `instance` - Identity for `docker_service` resource. Defaults to
-  name. Mostly unimportant for the 1.0 version because of its
-  singleton status. | String | nil
 - `api_cors_header` - Set CORS headers in the remote API
 - `bridge` - Attach containers to a network bridge
 - `bip` - Specify network bridge IP
@@ -456,34 +451,25 @@ options found in the
 - `iptables` - Enable addition of iptables rules
 - `ipv6` - Enable IPv6 networking
 - `log_level` - Set the logging level
-<<<<<<< HEAD
-- `labels` A string or array to set metadata on the daemon in the form
-  ['foo:bar', 'hello:world']`
-- `log_driver` - Container's logging driver
-  (json-file/syslog/journald/gelf/fluentd/none)
-=======
+- `labels` A string or array to set metadata on the daemon in the form ['foo:bar', 'hello:world']`
+- `log_driver` - Container's logging driver (json-file/syslog/journald/gelf/fluentd/none)
 - `labels` A string or array to set metadata on the daemon in the form ['foo:bar', 'hello:world']`
 - `log_driver` - Container's logging driver (json-file/syslog/journald/gelf/fluentd/awslogs/splunk/etwlogs/gcplogs/none)
->>>>>>> log_drivers
 - `log_opts` - Container's logging driver options (driver-specific)
 - `mtu` - Set the containers network MTU
+- `package_name` - Set the package name. Defaults to `docker-engine`
 - `pidfile` - Path to use for daemon PID file
 - `registry_mirror` - Preferred Docker registry mirror
 - `storage_driver` - Storage driver to use
 - `selinux_enabled` - Enable selinux support
 - `storage_opts` - Set storage driver options
-- `tls` - Use TLS; implied by --tlsverify. Defaults to
-  ENV['DOCKER_TLS'] if set
-- `tls_verify` - Use TLS and verify the remote. Defaults to
-  ENV['DOCKER_TLS_VERIFY'] if set
-- `tls_ca_cert` - Trust certs signed only by this CA. Defaults to
-  ENV['DOCKER_CERT_PATH'] if set
+- `tls` - Use TLS; implied by --tlsverify. Defaults to  ENV['DOCKER_TLS'] if set
+- `tls_verify` - Use TLS and verify the remote. Defaults to  ENV['DOCKER_TLS_VERIFY'] if set
+- `tls_ca_cert` - Trust certs signed only by this CA. Defaults to  ENV['DOCKER_CERT_PATH'] if set
 - `tls_server_cert` - Path to TLS certificate file for docker service
 - `tls_server_key` - Path to TLS key file for docker service
-- `tls_client_cert` - Path to TLS certificate file for docker
-  cli. Defaults to ENV['DOCKER_CERT_PATH'] if set
-- `tls_client_key` - Path to TLS key file for docker cli. Defaults to
-  ENV['DOCKER_CERT_PATH'] if set
+- `tls_client_cert` - Path to TLS certificate file for docker cli. Defaults to ENV['DOCKER_CERT_PATH'] if set
+- `tls_client_key` - Path to TLS key file for docker cli. Defaults to  ENV['DOCKER_CERT_PATH'] if set
 - `default_ulimit` - Set default ulimit settings for containers
 - `http_proxy` - ENV variable set before for Docker daemon starts
 - `https_proxy` - ENV variable set before for Docker daemon starts
@@ -493,9 +479,7 @@ options found in the
 - `userland_proxy`- Enables or disables docker-proxy
 - `disable_legacy_registry` - Do not contact legacy registries
 - `userns_remap` - Enable user namespace remapping options -
-  `default`, `uid`, `uid:gid`, `username`, `username:groupname` (see:
-  [Docker User Namespaces](see:
-  https://docs.docker.com/v1.10/engine/reference/commandline/daemon/#daemon-user-namespace-options))
+  `default`, `uid`, `uid:gid`, `username`, `username:groupname` (see: [Docker User Namespaces](see: https://docs.docker.com/v1.10/engine/reference/commandline/daemon/#daemon-user-namespace-options))
 - `mount_flags` - Set the systemd mount propagation flag. Defaults to slave.
 
 #### Miscellaneous Options
@@ -662,19 +646,17 @@ as driven by the
 
 A `docker_image`'s full identifier is a string in the form
 "\<repo\>:\<tag\>". There is some nuance around naming using the
-public
-
-registry vs a private one.
+public registry vs a private one.
 
 - `repo` - aka `image_name` - The first half of a Docker image's
   identity. This is a string in the form:
   `registry:port/owner/image_name`. If the `registry:port` portion is
   left off, Docker will implicitly use the Docker public
   registry. "Official Images" omit the owner part. This means a repo
-  id can look as short as `busybox`, `alpine`, or `centos`, to refer
-  to official images on the public registry, and as long as
+  id can be as short as `busybox`, `alpine`, or `centos`. These names refer
+  to official images on the public registry. Names can be as long as
   `my.computers.biz:5043/what/ever` to refer to custom images on an
-  private registry. Often you'll see something like `someara/chef` to
+  private registry. Often you'll see something like `chef/chef` to
   refer to private images on the public registry. - Defaults to
   resource name.
 - `tag` - The second half of a Docker image's identity. - Defaults to
@@ -682,7 +664,7 @@ registry vs a private one.
 - `source` - Path to input for the `:import`, `:build` and
   `:build_if_missing` actions. For building, this can be a Dockerfile,
   a tarball containing a Dockerfile in its root, or a directory
-  containing a Dockerfile. For import, this should be a tarball
+  containing a Dockerfile. For `:import`, this should be a tarball
   containing Docker formatted image, as generated with `:save`.
 - `destination` - Path for output from the `:save` action.
 - `force` - A force boolean used in various actions - Defaults to
@@ -694,22 +676,22 @@ registry vs a private one.
 - `read_timeout` - May need to increase for long image builds/pulls
 - `write_timeout` - May need to increase for long image builds/pulls
 - `host` - A string containing the host the API should communicate
-  with. Defaults to ENV['DOCKER_HOST'] if set
+  with. Defaults to `ENV['DOCKER_HOST']` if set.
 - `tls` - Use TLS; implied by --tlsverify. Defaults to
-  ENV['DOCKER_TLS'] if set
+  ENV['DOCKER_TLS'] if set.
 - `tls_verify` - Use TLS and verify the remote. Defaults to
-  ENV['DOCKER_TLS_VERIFY'] if set
+  `ENV['DOCKER_TLS_VERIFY']` if set
 - `tls_ca_cert` - Trust certs signed only by this CA. Defaults to
-  ENV['DOCKER_CERT_PATH'] if set
+  `ENV['DOCKER_CERT_PATH']` if set.
 - `tls_client_cert` - Path to TLS certificate file for docker
-  cli. Defaults to ENV['DOCKER_CERT_PATH'] if set
+  cli. Defaults to `ENV['DOCKER_CERT_PATH']` if set
 - `tls_client_key` - Path to TLS key file for docker cli. Defaults to
-  ENV['DOCKER_CERT_PATH'] if set
+  `ENV['DOCKER_CERT_PATH']` if set.
 
 ### Actions
 
 The following actions are available for a `docker_image`
-resource. Defaults to `pull_if_missing`
+resource. Defaults to `pull`
 
 - `:pull` - Pulls an image from the registry
 - `:pull_if_missing` - Pulls an image from the registry, only if it missing
@@ -773,7 +755,7 @@ docker_container 'hello-world' do
 end
 ```
 
-- This command will exit succesfully. This will happen on every chef-client run.
+- This will exit succesfully. It will happen on every chef-client run.
 
 ```ruby
 docker_container 'busybox_ls' do
@@ -1132,7 +1114,7 @@ docker_container 'syslogger' do
   tag '3.1'
   command 'nc -ll -p 780 -e /bin/cat'
   log_driver 'syslog'
-  log_opts 'syslog-tag=container-syslogger'
+  log_opts 'tag=container-syslogger'
 end
 ```
 
@@ -1179,6 +1161,7 @@ Most `docker_container` properties are the `snake_case` version of the `CamelCas
 - `memory_swap` - Total memory limit (memory + swap); set `-1` to disable swap limit (unlimited). You must use this with memory and make the swap value larger than memory.
 - `network_disabled` - Boolean to disable networking. Defaults to `false`.
 - `network_mode` - Sets the networking mode for the container. One of `bridge`, `host`, `container`.
+- `network_aliases` - Adds network-scoped alias for the container in form `['alias-1', 'alias-2']`.
 - `open_stdin` - Boolean value, opens stdin. Defaults to `false`.
 - `outfile` - The path to write the file when using `:export` action.
 - `port` - The port configuration to use in the container. Matches the syntax used by the `docker` CLI tool.

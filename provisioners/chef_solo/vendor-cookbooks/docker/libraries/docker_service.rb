@@ -22,6 +22,7 @@ module DockerCookbook
 
     # docker_installation_package
     property :package_version, String, desired_state: false
+    property :package_name, String, desired_state: false
 
     # binary, package and tarball
     property :version, String, desired_state: false
@@ -98,6 +99,7 @@ module DockerCookbook
 
       installation do
         action :create
+        notifies :restart, new_resource, :immediately
       end
     end
 
