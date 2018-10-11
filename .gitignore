@@ -1,1 +1,2 @@
-config_override.yaml
+.DS_Store
+provisioners/chef_solo/nodes/*.json

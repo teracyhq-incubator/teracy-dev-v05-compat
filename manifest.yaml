@@ -1,4 +1,4 @@
-name: teracy-dev-v05-migration
+name: teracy-dev-v05-compat
 version: "0.1.0-SNAPSHOT"
-description: migration extension from teracy-dev v0.5 yo v0.6
-target: ">= 0.6.0-a1-SNAPSHOT" # the teracy's target version (optional, not specified means all)
+description: migration extension from teracy-dev v0.5 to v0.6
+target: ">= 0.6.0-a4" # the teracy's target version (optional, not specified means all)
