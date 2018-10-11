@@ -35,6 +35,9 @@ teracy-dev:
 ```
 
 
+See this example setup: https://github.com/teracyhq-incubator/teracy-dev-entry-v05#how-to-use
+
+
 ## How to develop
 
 You should configure the forked git repo into the `workspace` directory by adding the following
