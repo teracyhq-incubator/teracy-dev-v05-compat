@@ -3,6 +3,7 @@ variables:
   node_name_prefix: ${NODE_NAME_PREFIX:-teracy-dev}
   node_hostname_prefix: ${NODE_HOSTNAME_PREFIX:-teracy-dev}
   node_domain_affix: ${NODE_DOMAIN_AFFIX:-local}
+  home_sync_path: ./extensions/home # relative to the Vagrantfile
 
 
 vagrant:
@@ -46,6 +47,16 @@ nodes:
             - ".git"
             - ".idea"
             - ".#*"
+          create: true
+        - _id: "v05-compat-docker" # should persist docker auth token after login success #170
+          type: virtualbox
+          host: "%{home_sync_path}/.docker"
+          guest: "/home/vagrant/.docker"
+          mount_options:
+            - dmode=775
+            - fmode=755
+          create: true
+
     provisioners:
       - _id: 'v05-compat-0'
         version: 13.1.31
