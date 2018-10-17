@@ -8,7 +8,7 @@ variables:
 
 vagrant:
   plugins:
-    - _id: "essential-0"
+    - _id: "essential-0" # vagrant-hostmanager plugin
       enabled: true
       state: installed
 
@@ -74,23 +74,34 @@ nodes:
           - vim
           - teracy-dev
         json:
+          # we mix teracy-dev config along with vender-cookbooks config, hopefully this is better than
+          # separated as we did before, this is for advanded users only
           docker:
             enabled: true
-            version: ''
+            version: '' # use this to install a specific docker version, default: ""
+            # used along with the version key, this is default for Ubuntu
             package_options: "--force-yes -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-all'"
-            repo: main
+            repo: main # one of main, test, experimental, default: "main"
             members:
-              - vagrant
-            action: create
+              - vagrant # to append this member to "docker" group
+            action: create # one of create, delete. Default: create
           docker_registry:
-            force: false
+            force: false # set true to force re-login with all the defined entries, default: false (login once)
             entries: []
+            # example:
+            # entries:
+            #   - host: https://index.docker.io/v1/
+            #     username: ""
+            #     password: ""
+            #   - host: registry.gitlab.com
+            #     username: ""
+            #     password: ""
           docker_compose:
-            version: ''
-            enabled: true
+            version: '' # more: https://github.com/docker/compose/releases/
+            enabled: true # "docker" must be enabled to get this
           docker_machine:
             enabled: false
-            release: v0.8.2
+            release: v0.8.2 # more: https://github.com/docker/machine/releases/
           teracy-dev:
             directories:
               - _id: 'v05-compat-0'
@@ -98,32 +109,34 @@ nodes:
                 owner: vagrant
                 group: vagrant
                 mode: '0775'
-                action: create
+                action: create # one of create, delete, nothing. Default: create
+                # See more: https://docs.chef.io/resource_directory.html
             aliases:
               - _id: 'v05-compat-0'
                 name: ws
                 command: cd ~/workspace
                 action: add
               - _id: 'v05-compat-1'
-                name: ctop
+                name: ctop # `$ ctop` for top-like interface for container metrics, see: https://github.com/bcicen/ctop
                 command: docker run -ti --name ctop --rm -v /var/run/docker.sock:/var/run/docker.sock
                   quay.io/vektorlab/ctop:latest
                 action: add
               - _id: 'v05-compat-2'
-                name: http
+                name: http # `$ http` to make http requests, how to use: https://github.com/teracyhq/httpie-jwt-auth
                 command: docker container run -it --rm --net=host teracy/httpie-jwt-auth:latest-alpine
                 action: add
               - _id: 'v05-compat-3'
-                name: https
+                name: https # shortcut for making https requests
                 command: http --default-scheme=https
                 action: add
             env_vars:
               - _id: 'v05-compat-0'
                 key: EDITOR
                 value: vim
-                action: add
+                action: add # one of add, remove. Default: add
+                # See more: https://github.com/customink-webops/magic_shell/blob/master/resources/environment.rb
             inotify:
-              max_user_watches: 524288
+              max_user_watches: 524288 # see: https://github.com/teracyhq/dev/issues/208, set value = 0 to unset this setting
             proxy:
               enabled: true
               certs:
