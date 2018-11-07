@@ -59,6 +59,7 @@ nodes:
 
     provisioners:
       - _id: 'v05-compat-0'
+        name: teracy-dev-v05-compat
         version: 13.1.31
         type: chef_solo
         log_level: info
