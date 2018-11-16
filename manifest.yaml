@@ -1,10 +1,10 @@
 name: teracy-dev-v05-compat
 version: "0.1.0-SNAPSHOT"
 description: migration extension from teracy-dev v0.5 to v0.6
-target: ">= 0.6.0-a4"
+target: ">= 0.6.0-a5"
 # see: https://github.com/teracyhq/dev/issues/498
 dependencies:
   - name: teracy-dev-core
-    require_version: ">= 0.4.0-SNAPSHOT" # change this to 0.4.0 when it's released
+    require_version: ">= 0.4.0"
   - name: teracy-dev-essential
     require_version: ">= 0.1.0"
