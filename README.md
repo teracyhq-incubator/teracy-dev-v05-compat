@@ -10,8 +10,8 @@ from v0.5
 
 This extension requires:
 
-- teracy-dev:           >= 0.6.0-a4
-- teracy-dev-core:      >= 0.4.0-SNAPSHOT
+- teracy-dev:           >= 0.6.0-a5, < 0.7.0
+- teracy-dev-core:      >= 0.4.0
 - teracy-dev-essential: >= 0.1.0
 
 See the `manifest.yaml` file for more information.
@@ -21,21 +21,59 @@ See the `manifest.yaml` file for more information.
 
 Configure `workspace/teracy-dev-entry/config_default.yaml` with the following similar content:
 
+- Use specific version:
+
 ```yaml
 teracy-dev:
   extensions:
-    - _id: "entry-0"
+    - _id: "entry-v05-compat"
       path:
         extension: teracy-dev-v05-compat
       location:
-        git: https://github.com/teracyhq-incubator/teracy-dev-v05-compat.git
-        branch: develop
-      require_version: ">= 0.1.0-SNAPSHOT"
+        git:
+          remote:
+            origin: https://github.com/teracyhq-incubator/teracy-dev-v05-compat.git
+          branch: v0.1.0
+      require_version: ">= 0.1.0"
+      enabled: true
+```
+
+- Use latest stable version (auto update):
+
+```yaml
+teracy-dev:
+  extensions:
+    - _id: "entry-v05-compat"
+      path:
+        extension: teracy-dev-v05-compat
+      location:
+        git:
+          remote:
+            origin: https://github.com/teracyhq-incubator/teracy-dev-v05-compat.git
+          branch: master
+      require_version: ">= 0.1.0"
+      enabled: true
+```
+
+- Use latest develop version (auto update):
+
+```yaml
+teracy-dev:
+  extensions:
+    - _id: "entry-v05-compat"
+      path:
+        extension: teracy-dev-v05-compat
+      location:
+        git:
+          remote:
+            origin: https://github.com/teracyhq-incubator/teracy-dev-v05-compat.git
+          branch: develop
+      require_version: ">= 0.2.0-SNAPSHOT"
       enabled: true
 ```
 
 
-See this example setup: https://github.com/teracyhq-incubator/teracy-dev-entry-v05#how-to-use
+See this example teracy-dev-entry setup: https://github.com/teracyhq-incubator/teracy-dev-entry-v05#how-to-use
 
 
 ## How to develop
@@ -47,11 +85,14 @@ similar content into `workspace/teracy-dev-entry/config_override.yaml`:
 ```yaml
 teracy-dev:
   extensions:
-    - _id: "entry-0" # must match the _id configured from the config_default.yaml file
+    - _id: "entry-v05-compat" # must match the _id configured from the config_default.yaml file
       path:
         lookup: workspace # use workspace directory to lookup for this extension
       location:
-        git: git@github.com:hoatle/teracy-dev-v05-compat.git # your forked repo
-        branch: develop
-      require_version: ">= 0.1.0-SNAPSHOT"
+        git:
+          remote:
+            origin: git@github.com:hoatle/teracy-dev-v05-compat.git # your forked repo
+            upstream: git@github.com:teracyhq-incubator/teracy-dev-v05-compat.git
+          branch: develop
+      require_version: ">= 0.2.0-SNAPSHOT"
 ```
