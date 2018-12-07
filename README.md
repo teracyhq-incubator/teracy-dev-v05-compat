@@ -12,7 +12,7 @@ This extension requires:
 
 - teracy-dev:           >= 0.6.0-a5, < 0.7.0
 - teracy-dev-core:      >= 0.4.0
-- teracy-dev-essential: >= 0.1.0
+- teracy-dev-essential: >= 0.2.0
 
 See the `manifest.yaml` file for more information.
 
