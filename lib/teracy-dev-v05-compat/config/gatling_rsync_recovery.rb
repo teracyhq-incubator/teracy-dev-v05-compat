@@ -3,10 +3,20 @@ require 'teracy-dev/plugin'
 require 'teracy-dev/util'
 
 module TeracyDevV05Compat
-  module Trigger
-    class RsyncTrigger < TeracyDev::Config::Configurator
+  module Config
+    class GatlingRsyncRecovery < TeracyDev::Config::Configurator
 
       def configure_node(settings, config)
+        # The trigger is only supported by vagrant version >= 2.2.0
+        require_version = ">= 2.2.0"
+        vagrant_version = Vagrant::VERSION
+
+        if !TeracyDev::Util.require_version_valid?(vagrant_version, require_version)
+          @logger.warn("vagrant's current version: #{vagrant_version}")
+          @logger.warn("The trigger is only supported by vagrant version `#{require_version}`")
+          return
+        end
+
         synced_folders_settings = settings['vm']['synced_folders'] || []
         return if synced_folders_settings.empty?
 
@@ -25,7 +35,7 @@ module TeracyDevV05Compat
               system("vagrant gatling-rsync-auto")
               raise unless $?.exitstatus == 0
             rescue
-              puts 'rsync crashed, retrying...'
+              @logger.info('rsync crashed, retrying...')
               retry
             end
 

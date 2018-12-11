@@ -12,7 +12,8 @@ vagrant:
       enabled: true
       state: installed
 
-    - _id: "v05-compat-0"
+    - _id: "v05-compat-gatling-rsync"
+      _id_deprecated: "v05-compat-0"
       name: vagrant-gatling-rsync
       version: "" # empty means latest by default
       state: installed # uninstalled
@@ -23,7 +24,8 @@ vagrant:
         time_format: "%%H:%%M:%%S"
         rsync_on_startup: true
 
-    - _id: "v05-compat-1"
+    - _id: "v05-compat-rsync-back"
+      _id_deprecated: "v05-compat-1"
       name: vagrant-rsync-back
       version: "" # empty means latest by default
       state: installed # uninstalled
@@ -36,10 +38,12 @@ nodes:
     vm:
       hostname: "%{node_hostname_prefix}.%{node_domain_affix}"
       networks:
-        - _id: "v05-compat-0"
+        - _id: "v05-compat-public-network"
+          _id_deprecated: "v05-compat-0"
           type: "public_network"
       synced_folders:
-        - _id: "v05-compat-0"
+        - _id: "v05-compat-workspace"
+          _id_deprecated: "v05-compat-0"
           type: rsync
           host: "./workspace"
           guest: "/home/vagrant/workspace"
@@ -58,7 +62,8 @@ nodes:
           create: true
 
     provisioners:
-      - _id: 'v05-compat-0'
+      - _id: "v05-compat-chef"
+        _id_deprecated: 'v05-compat-0'
         name: teracy-dev-v05-compat
         version: 13.1.31
         type: chef_solo
@@ -105,7 +110,8 @@ nodes:
             release: v0.8.2 # more: https://github.com/docker/machine/releases/
           teracy-dev:
             directories:
-              - _id: 'v05-compat-0'
+              - _id: "v05-compat-workspace"
+                _id_deprecated: 'v05-compat-0'
                 path: "/home/vagrant/workspace"
                 owner: vagrant
                 group: vagrant
@@ -113,25 +119,30 @@ nodes:
                 action: create # one of create, delete, nothing. Default: create
                 # See more: https://docs.chef.io/resource_directory.html
             aliases:
-              - _id: 'v05-compat-0'
+              - _id: "v05-compat-ws"
+                _id_deprecated: 'v05-compat-0'
                 name: ws
                 command: cd ~/workspace
                 action: add
-              - _id: 'v05-compat-1'
+              - _id: "v05-compat-ctop"
+                _id_deprecated: 'v05-compat-1'
                 name: ctop # `$ ctop` for top-like interface for container metrics, see: https://github.com/bcicen/ctop
                 command: docker run -ti --name ctop --rm -v /var/run/docker.sock:/var/run/docker.sock
                   quay.io/vektorlab/ctop:latest
                 action: add
-              - _id: 'v05-compat-2'
+              - _id: "v05-compat-http"
+                _id_deprecated: 'v05-compat-2'
                 name: http # `$ http` to make http requests, how to use: https://github.com/teracyhq/httpie-jwt-auth
                 command: docker container run -it --rm --net=host teracy/httpie-jwt-auth:latest-alpine
                 action: add
-              - _id: 'v05-compat-3'
+              - _id: "v05-compat-https"
+                _id_deprecated: 'v05-compat-3'
                 name: https # shortcut for making https requests
                 command: http --default-scheme=https
                 action: add
             env_vars:
-              - _id: 'v05-compat-0'
+              - _id: "v05-compat-editor"
+                _id_deprecated: 'v05-compat-0'
                 key: EDITOR
                 value: vim
                 action: add # one of add, remove. Default: add
