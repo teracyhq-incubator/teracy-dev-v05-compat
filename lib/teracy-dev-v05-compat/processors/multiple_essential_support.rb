@@ -19,19 +19,21 @@ module TeracyDevV05Compat
 
           essential_override_conf = plugins.find { |item| item['_id'] == 'essential-hostmanager' }
 
-          # remove the new incompatible plugin config
-          plugins.each do |plugin|
-            if plugin['_id'] == 'essential-hostmanager'
-              plugins.delete(plugin)
+          if !essential_override_conf.nil?
+            # remove the new incompatible plugin config
+            plugins.each do |plugin|
+              if plugin['_id'] == 'essential-hostmanager'
+                plugins.delete(plugin)
+              end
             end
-          end
-          # reset _id
-          essential_override_conf['_id'] = 'essential-0'
-          # override dynamically
-          plugins.each_with_index do |plugin, idx|
-            if plugin['_id'] == 'essential-0'
-              plugin = TeracyDev::Util.override(plugin, essential_override_conf)
-              plugins[idx] = plugin
+            # reset _id
+            essential_override_conf['_id'] = 'essential-0'
+            # override dynamically
+            plugins.each_with_index do |plugin, idx|
+              if plugin['_id'] == 'essential-0'
+                plugin = TeracyDev::Util.override(plugin, essential_override_conf)
+                plugins[idx] = plugin
+              end
             end
           end
         end
