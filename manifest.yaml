@@ -1,6 +1,6 @@
 name: teracy-dev-v05-compat
 version: "0.3.0-SNAPSHOT"
-description: migration extension from teracy-dev v0.5 to v0.6
+description: teracy-dev v0.5's compatible features ported to teracy-dev v0.6
 target: ">= 0.6.0-a5, < 0.7.0"
 dependencies:
   - name: teracy-dev-core
