@@ -1,5 +1,13 @@
 # Change Log
 
+## [v0.3.0][] (2018-01-22)
+
+- Improvements:
+  + should update to use teracy-dev-essential v0.3.0 #24
+
+Details: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/3?closed=1
+
+
 ## [v0.2.0][] (2018-12-15)
 
 - Improvements:
@@ -22,3 +30,4 @@ Details: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/1
 
 [v0.1.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/1?closed=1
 [v0.2.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/2?closed=1
+[v0.3.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/3?closed=1
