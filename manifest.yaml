@@ -6,4 +6,4 @@ dependencies:
   - name: teracy-dev-core
     require_version: ">= 0.4.0"
   - name: teracy-dev-essential
-    require_version: ">= 0.1.0"
+    require_version: ">= 0.3.0"
