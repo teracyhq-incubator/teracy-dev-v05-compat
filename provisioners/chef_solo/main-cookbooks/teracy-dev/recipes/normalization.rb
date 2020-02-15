@@ -1,7 +1,7 @@
 #
 # Author:: Hoat Le <hoatlevan@gmail.com>
 # Cookbook Name:: teracy-dev
-# Recipe:: github
+# Recipe:: normalization
 #
 # Copyright 2013 - current, Teracy, Inc.
 #
@@ -31,13 +31,14 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-include_recipe 'teracy-dev::directories'
-include_recipe 'teracy-dev::aliases'
-include_recipe 'teracy-dev::env_vars'
-include_recipe 'teracy-dev::docker'
-include_recipe 'teracy-dev::docker_registry'
-include_recipe 'teracy-dev::docker_machine'
-include_recipe 'teracy-dev::files'
-include_recipe 'teracy-dev::inotify'
-include_recipe 'teracy-dev::normalization'
-include_recipe 'teracy-dev::proxy'
+# temporary solution for https://github.com/teracyhq/dev/issues/388
+# install bash-completion if not yet available
+if platform?('ubuntu')
+  bash 'check exist and install bash-completion' do
+    code <<-EOH
+      apt-get install bash-completion
+      . /etc/bash_completion
+      EOH
+    not_if { ::File.exist?('/etc/bash_completion') && ::File.exist?('/usr/share/bash-completion/bash_completion') }
+  end
+end
