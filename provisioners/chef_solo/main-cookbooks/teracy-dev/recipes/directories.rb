@@ -34,6 +34,11 @@
 node['teracy-dev']['directories'].each do |dir|
     mode = 0775
     act = :create
+    recursive = true
+    if dir['recursive'] == false
+        recursive = false
+    end
+
     mod = dir['mode'] unless dir['mode'].nil? or dir['mode'].strip().empty?
     act = dir['action'].to_sym unless dir['action'].nil? or dir['action'].strip().empty?
     directory dir['path'] do
@@ -41,5 +46,6 @@ node['teracy-dev']['directories'].each do |dir|
         group dir['group']
         mode mod
         action act
+        recursive recursive
     end
 end
