@@ -1,7 +1,7 @@
 #
 # Author:: Hoat Le <hoatlevan@gmail.com>
 # Cookbook Name:: teracy-dev
-# Recipe:: github
+# Recipe:: files
 #
 # Copyright 2013 - current, Teracy, Inc.
 #
@@ -31,12 +31,44 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-include_recipe 'teracy-dev::directories'
-include_recipe 'teracy-dev::aliases'
-include_recipe 'teracy-dev::env_vars'
-include_recipe 'teracy-dev::docker'
-include_recipe 'teracy-dev::docker_registry'
-include_recipe 'teracy-dev::docker_machine'
-include_recipe 'teracy-dev::files'
-include_recipe 'teracy-dev::inotify'
-include_recipe 'teracy-dev::proxy'
+# Manage files with file resource: using src as path for content source and dest
+# path as the saved destination path
+#
+# see: https://docs.chef.io/resource_file.html
+#
+# example:
+#
+# teracy-dev:
+#   # copy certs files for nginx proxy
+#   files:
+#     - _id: teracy-common-cert-key
+#       src: /vagrant/workspace/certs/teracy-local-key.pem
+#       dest: /etc/nginx/certs/teracy.local.key
+#       owner: vagrant
+#       group: vagrant
+#       mode: '0755'
+#       action: create
+#     - _id: teracy-common-cert
+#       src: /vagrant/workspace/certs/teracy-local.crt
+#       dest: /etc/nginx/certs/teracy.local.crt
+#       owner: vagrant
+#       group: vagrant
+#       mode: '0755'
+#       action: create
+
+files = node['teracy-dev']['files'] || []
+
+def sym_action(opt)
+    opt['action'].nil? || opt['action'].strip().empty? ? :create : opt['action'].to_sym
+end
+
+files.each do |file_conf|
+  act = sym_action(file_conf)
+  file "#{file_conf['dest']}" do
+    content ::File.open(file_conf['src']).read
+    owner file_conf['owner']
+    group file_conf['group']
+    mode file_conf['mode']
+    action act
+  end
+end
