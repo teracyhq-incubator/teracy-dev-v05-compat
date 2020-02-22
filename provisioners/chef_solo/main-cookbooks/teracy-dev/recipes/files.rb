@@ -1,9 +1,9 @@
 #
 # Author:: Hoat Le <hoatlevan@gmail.com>
-# Cookbook Name:: teracy-dev
+# Cookbook:: teracy-dev
 # Recipe:: files
 #
-# Copyright 2013 - current, Teracy, Inc.
+# Copyright:: 2013 - current, Teracy, Inc.
 #
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
@@ -59,12 +59,12 @@
 files = node['teracy-dev']['files'] || []
 
 def sym_action(opt)
-    opt['action'].nil? || opt['action'].strip().empty? ? :create : opt['action'].to_sym
+  opt['action'].nil? || opt['action'].strip().empty? ? :create : opt['action'].to_sym
 end
 
 files.each do |file_conf|
   act = sym_action(file_conf)
-  file "#{file_conf['dest']}" do
+  file file_conf['dest'] do
     content ::File.open(file_conf['src']).read
     owner file_conf['owner']
     group file_conf['group']

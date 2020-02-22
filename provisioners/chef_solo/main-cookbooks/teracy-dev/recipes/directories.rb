@@ -1,9 +1,9 @@
 #
 # Author:: Hoat Le <hoatlevan@gmail.com>
-# Cookbook Name:: teracy-dev
+# Cookbook:: teracy-dev
 # Recipe:: directories
 #
-# Copyright 2013 - current, Teracy, Inc.
+# Copyright:: 2013 - current, Teracy, Inc.
 #
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
@@ -32,20 +32,20 @@
 #
 
 node['teracy-dev']['directories'].each do |dir|
-    mode = 0775
-    act = :create
-    recursive = true
-    if dir['recursive'] == false
-        recursive = false
-    end
+  mod = 0775
+  act = :create
+  recursive = true
+  if dir['recursive'] == false
+    recursive = false
+  end
 
-    mod = dir['mode'] unless dir['mode'].nil? or dir['mode'].strip().empty?
-    act = dir['action'].to_sym unless dir['action'].nil? or dir['action'].strip().empty?
-    directory dir['path'] do
-        owner dir['owner']
-        group dir['group']
-        mode mod
-        action act
-        recursive recursive
-    end
+  mod = dir['mode'] unless dir['mode'].nil? || dir['mode'].strip().empty?
+  act = dir['action'].to_sym unless dir['action'].nil? || dir['action'].strip().empty?
+  directory dir['path'] do
+    owner dir['owner']
+    group dir['group']
+    mode mod
+    action act
+    recursive recursive
+  end
 end

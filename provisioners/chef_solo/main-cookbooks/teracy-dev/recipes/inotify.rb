@@ -1,10 +1,10 @@
 #
 # Author:: Hoat Le <hoatle@teracy.com>
-# Cookbook Name:: teracy-dev
+# Cookbook:: teracy-dev
 # Recipe:: inotify
 # Description: Configures inotify watchers
 #
-# Copyright 2013 - current, Teracy, Inc.
+# Copyright:: 2013 - current, Teracy, Inc.
 #
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
@@ -33,22 +33,22 @@
 #
 
 # see https://github.com/teracyhq/dev/issues/208
-if node['platform'] == 'ubuntu'
+if platform?('ubuntu')
   max_user_watches = node['teracy-dev']['inotify']['max_user_watches']
 
   # should remove the existing line
   execute 'remove existing fs.inotify.max_user_watches line' do
-      command "sudo sed -i '/fs.inotify.max_user_watches/d' /etc/sysctl.conf"
+    command "sudo sed -i '/fs.inotify.max_user_watches/d' /etc/sysctl.conf"
   end
 
   execute 'add new fs.inotify.max_user_watches config' do
-      command "echo fs.inotify.max_user_watches=#{max_user_watches} | sudo tee -a /etc/sysctl.conf"
-      not_if { max_user_watches < 1 }
+    command "echo fs.inotify.max_user_watches=#{max_user_watches} | sudo tee -a /etc/sysctl.conf"
+    not_if { max_user_watches < 1 }
   end
 
   # this must run after settings
   execute 'sudo sysctl -p' do
-      command 'sudo sysctl -p'
+    command 'sudo sysctl -p'
   end
 
 end

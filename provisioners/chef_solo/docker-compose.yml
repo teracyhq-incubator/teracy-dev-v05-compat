@@ -1,11 +1,17 @@
-version: "2"
+version: '3'
 
 services:
-  dev:
-    build:
-      context: .
-      dockerfile: Dockerfile-dev
-    image: teracy/dev:dev_develop
-    command: bash -c "rake build && rake berks_install"
+
+  lint:
+    image: teracy/chefdk
+    working_dir: /opt/app
+    command: sh -c "cookstyle main-cookbooks"
+    volumes:
+      - .:/opt/app
+
+  install:
+    image: teracy/chefdk
+    working_dir: /opt/app
+    command: sh run-dev.sh
     volumes:
       - .:/opt/app
