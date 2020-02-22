@@ -1,7 +1,0 @@
-[submodule "provisioners/chef_solo/test/foodcritic/customink"]
-  path = provisioners/chef_solo/test/foodcritic/customink
-  url = git://github.com/customink-webops/foodcritic-rules.git
-
-[submodule "provisioners/chef_solo/test/foodcritic/etsy"]
-	path = provisioners/chef_solo/test/foodcritic/etsy
-	url = git://github.com/etsy/foodcritic-rules.git

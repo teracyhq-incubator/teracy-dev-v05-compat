@@ -1,9 +1,9 @@
 #
 # Author:: Hoat Le <hoatle@teracy.com>
-# Cookbook Name:: teracy-dev
+# Cookbook:: teracy-dev
 # Recipe:: docker
 #
-# Copyright 2013 - current, Teracy, Inc.
+# Copyright:: 2013 - current, Teracy, Inc.
 #
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
@@ -33,122 +33,87 @@
 
 docker_conf = node['docker']
 
-def get_docker_compose_release
-    release = node['docker_compose']['version']
+def docker_compose_release
+  release = node['docker_compose']['version']
 
-    if release.empty?
-        result = Mixlib::ShellOut.new('curl -s https://api.github.com/repos/docker/compose/releases/latest | grep "tag_name" | cut -d\" -f4')
+  if release.empty?
+    result = Mixlib::ShellOut.new('curl -s https://api.github.com/repos/docker/compose/releases/latest | grep "tag_name" | cut -d\" -f4')
 
-        result.run_command
+    result.run_command
 
-        result.error!
+    result.error!
 
-        release = result.stdout.strip
+    release = result.stdout.strip
 
-        # TODO(hoatle): what if error or empty result? need to handle this case
-    end
-    node.override['docker_compose']['release'] = release
-    Chef::Log.info("get_docker_compose_release::release: #{release}")
-    release
+    # TODO(hoatle): what if error or empty result? need to handle this case
+  end
+  node.override['docker_compose']['release'] = release
+  Chef::Log.info("docker_compose_release::release: #{release}")
+  release
 end
 
 def existing_docker_compose_version
-    existing_docker_compose_version_cmd = Mixlib::ShellOut.new("docker-compose version | head -1 | grep -o -E '[0-9].*' | cut -d ',' -f1")
+  existing_docker_compose_version_cmd = Mixlib::ShellOut.new("docker-compose version | head -1 | grep -o -E '[0-9].*' | cut -d ',' -f1")
 
-    existing_docker_compose_version_cmd.run_command
+  existing_docker_compose_version_cmd.run_command
 
-    existing_version = ''
+  existing_version = ''
 
-    existing_version = existing_docker_compose_version_cmd.stdout.strip if existing_docker_compose_version_cmd.stderr.empty? && !existing_docker_compose_version_cmd.stdout.empty?
-    Chef::Log.debug("existing_docker_compose_version_cmd.stderr: #{existing_docker_compose_version_cmd.stderr}")
-    Chef::Log.debug("existing_docker_compose_version_cmd.stdout: #{existing_docker_compose_version_cmd.stdout}")
-    existing_version
-end
-
-def get_docker_compose_autocomplete_url
-    "https://raw.githubusercontent.com/docker/compose/#{get_docker_compose_release}/contrib/completion/bash/docker-compose"
+  existing_version = existing_docker_compose_version_cmd.stdout.strip if existing_docker_compose_version_cmd.stderr.empty? && !existing_docker_compose_version_cmd.stdout.empty?
+  Chef::Log.debug("existing_docker_compose_version_cmd.stderr: #{existing_docker_compose_version_cmd.stderr}")
+  Chef::Log.debug("existing_docker_compose_version_cmd.stdout: #{existing_docker_compose_version_cmd.stdout}")
+  existing_version
 end
 
 if docker_conf['enabled'] == true
 
-    act = :create
-    if docker_conf['action'] == 'delete'
-        act = :delete
+  act = :create
+  if docker_conf['action'] == 'delete'
+    act = :delete
+  end
+
+  if !docker_conf['version'].empty?
+    # to make sure docker-engine is added into the package
+    # see: https://github.com/teracyhq/dev/issues/278
+    docker_installation 'default' do
+      repo docker_conf['repo']
+      action act
+      not_if 'which docker'
     end
 
-    if !docker_conf['version'].empty?
-        # to make sure docker-engine is added into the package
-        # see: https://github.com/teracyhq/dev/issues/278
-        docker_installation 'default' do
-            repo docker_conf['repo']
-            action act
-            not_if 'which docker'
-        end
-
-        # TODO(hoatle): better to uninstall only if the 2 versions mismatch
-        docker_installation 'default' do
-            repo docker_conf['repo']
-            action :delete
-        end
-
-        docker_installation_package 'default' do
-            version docker_conf['version']
-            action act
-            package_options docker_conf['package_options']
-        end
-    else
-        docker_installation 'default' do
-            repo docker_conf['repo']
-            action act
-        end
+    # TODO(hoatle): better to uninstall only if the 2 versions mismatch
+    docker_installation 'default' do
+      repo docker_conf['repo']
+      action :delete
     end
 
-    group 'docker' do
-        action :modify
-        members docker_conf['members']
-        append true
+    docker_installation_package 'default' do
+      version docker_conf['version']
+      action act
+      package_options docker_conf['package_options']
     end
-
-
-    if node['docker_compose']['enabled'] == true
-        release = get_docker_compose_release()
-
-        existing_docker_compose_version = existing_docker_compose_version()
-        docker_compose_path = node['docker_compose']['command_path']
-        docker_compose_autocomplete_path = '/etc/bash_completion.d/docker-compose'
-        Chef::Log.debug("existing_docker_compose_version: #{existing_docker_compose_version}")
-        # empty could mean broken installation, it's safe to do clean up.
-        if existing_docker_compose_version.empty? or existing_docker_compose_version != release
-            file docker_compose_path do
-              action :delete
-              only_if { File.exist?(docker_compose_path) }
-            end
-
-            file docker_compose_autocomplete_path do
-                action :delete
-                only_if { File.exist?(docker_compose_autocomplete_path) }
-            end
-        end
-
-        if !File.exist?(docker_compose_path)
-            # TODO(hoatle): get the cache file here
-            include_recipe 'docker_compose::installation'
-            # put the cache file here
-        end
-
-        if !File.exist?(docker_compose_autocomplete_path)
-            # TODO(hoatle): get the cache file here
-            autocomplete_url = get_docker_compose_autocomplete_url
-            # install docker-compose auto complete
-            execute 'install docker-compose autocomplete' do
-                action :run
-                command "curl -sSL #{autocomplete_url} > /etc/bash_completion.d/docker-compose"
-                creates docker_compose_autocomplete_path
-                user 'root'
-                group 'docker'
-                only_if { node['platform'] == 'ubuntu' }
-            end
-            # put the cache file here
-        end
+  else
+    docker_installation 'default' do
+      repo docker_conf['repo']
+      action act
     end
+  end
+
+  group 'docker' do
+    action :modify
+    members docker_conf['members']
+    append true
+  end
+
+  if node['docker_compose']['enabled'] == true
+    release = docker_compose_release()
+
+    existing_docker_compose_version = existing_docker_compose_version()
+    Chef::Log.debug("existing_docker_compose_version: #{existing_docker_compose_version}")
+    # empty could mean broken installation, it's safe to do clean up.
+    if existing_docker_compose_version.empty? || (existing_docker_compose_version != release)
+      include_recipe 'docker_compose::uninstallation'
+      include_recipe 'docker_compose::installation'
+    end
+  end
 end

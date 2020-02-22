@@ -1,4 +1,4 @@
-source "https://supermarket.chef.io"
+source 'https://supermarket.chef.io'
 
 cookbook 'vim', '~> 2.0'
 cookbook 'magic_shell', '~> 1.0'
