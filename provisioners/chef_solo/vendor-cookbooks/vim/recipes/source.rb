@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: vim
+# Cookbook:: vim
 # Recipe:: source
 #
-# Copyright 2013-2015, Chef Software, Inc.
+# Copyright:: 2013-2019, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,10 +20,9 @@
 cache_path = Chef::Config['file_cache_path']
 source_version = node['vim']['source']['version']
 
-package 'bzip2'
 package node['vim']['source']['dependencies']
 
-include_recipe 'vim::source_rhel' if platform?('fedora') || platform_family?('rhel')
+include_recipe 'vim::source_rhel' if platform_family?('fedora', 'rhel', 'amazon')
 
 remote_file "#{cache_path}/vim-#{source_version}.tar.bz2" do
   source "http://ftp.vim.org/pub/vim/unix/vim-#{source_version}.tar.bz2"

@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: vim
+# Cookbook:: vim
 # Recipe:: package
 #
-# Copyright 2013-2015, Chef Software, Inc.
+# Copyright:: 2013-2019, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,10 +22,10 @@
 #
 vim_base_pkgs = value_for_platform_family(
   %w(debian arch) => ['vim'],
-  %w(rhel fedora) => ['vim-minimal', 'vim-enhanced'],
+  %w(rhel fedora) => %w(vim-minimal vim-enhanced),
   'default' => ['vim']
 )
 
 package vim_base_pkgs
 
-package node['vim']['extra_packages']
+package node['vim']['extra_packages'] unless node['vim']['extra_packages'].empty?
