@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  lint:
+  verify:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,8 +19,8 @@ jobs:
         cd provisioners/chef_solo
         docker-compose up --exit-code-from lint lint
 
-  install:
-    needs: [lint]
+  update:
+    needs: [verify]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -33,15 +33,18 @@ jobs:
     # only on develop branch
     - name: Commit files
       run: |
+        BRANCH_NAME=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g")
+        echo "::set-env name=BRANCH_NAME::$BRANCH_NAME"
+
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
         git commit -m "vendor-cookbooks updated from CI" || true # ok if no changes
-      if: github.ref == 'refs/heads/develop'
+      if: startsWith(github.ref, 'refs/heads/')
 
     - name: Push changes
       uses: ad-m/github-push-action@v0.5.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: develop
-      if: github.ref == 'refs/heads/develop'
+        branch: ${{ env.BRANCH_NAME }}
+      if: startsWith(github.ref, 'refs/heads/')
