@@ -53,8 +53,6 @@ jobs:
     #     branch: ${{ env.BRANCH_NAME }}
     #   if: startsWith(github.ref, 'refs/heads/')
 
-    # if failed to push changes to protected branch on the above step, try to create a pull request
-    # to its branch
     - name: Create pull request
       id: cpr
       uses: peter-evans/create-pull-request@v2
@@ -64,3 +62,4 @@ jobs:
         title: "vendor-cookbooks updated from CI for ${{ env.BRANCH_NAME }}"
         body: automated changes for vendor-cookbooks from CI
         branch: vendor-cookbooks-update-for-${{ env.NORMALIZED_BRANCH_NAME }}
+      if: startsWith(github.ref, 'refs/heads/')
