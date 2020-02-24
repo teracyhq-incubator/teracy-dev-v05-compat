@@ -33,8 +33,8 @@ teracy-dev:
         git:
           remote:
             origin: https://github.com/teracyhq-incubator/teracy-dev-v05-compat.git
-          branch: v0.4.0
-      require_version: ">= 0.4.0"
+          branch: v0.5.0
+      require_version: ">= 0.5.0"
       enabled: true
 ```
 
@@ -51,7 +51,7 @@ teracy-dev:
           remote:
             origin: https://github.com/teracyhq-incubator/teracy-dev-v05-compat.git
           branch: master
-      require_version: ">= 0.4.0"
+      require_version: ">= 0.5.0"
       enabled: true
 ```
 
@@ -68,7 +68,7 @@ teracy-dev:
           remote:
             origin: https://github.com/teracyhq-incubator/teracy-dev-v05-compat.git
           branch: develop
-      require_version: ">= 0.5.0-SNAPSHOT"
+      require_version: ">= 0.6.0-SNAPSHOT"
       enabled: true
 ```
 
@@ -94,5 +94,5 @@ teracy-dev:
             origin: git@github.com:hoatle/teracy-dev-v05-compat.git # your forked repo
             upstream: git@github.com:teracyhq-incubator/teracy-dev-v05-compat.git
           branch: develop
-      require_version: ">= 0.5.0-SNAPSHOT"
+      require_version: ">= 0.6.0-SNAPSHOT"
 ```
