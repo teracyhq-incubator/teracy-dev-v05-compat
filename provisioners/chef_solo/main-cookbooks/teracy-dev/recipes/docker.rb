@@ -65,10 +65,6 @@ def existing_docker_compose_version
   existing_version
 end
 
-def docker_compose_autocomplete_url
-  "https://raw.githubusercontent.com/docker/compose/#{docker_compose_release}/contrib/completion/bash/docker-compose"
-end
-
 if docker_conf['enabled'] == true
 
   act = :create
@@ -113,41 +109,11 @@ if docker_conf['enabled'] == true
     release = docker_compose_release()
 
     existing_docker_compose_version = existing_docker_compose_version()
-    docker_compose_path = node['docker_compose']['command_path']
-    docker_compose_autocomplete_path = '/etc/bash_completion.d/docker-compose'
     Chef::Log.debug("existing_docker_compose_version: #{existing_docker_compose_version}")
     # empty could mean broken installation, it's safe to do clean up.
     if existing_docker_compose_version.empty? || (existing_docker_compose_version != release)
-      file docker_compose_path do
-        action :delete
-        only_if { ::File.exist?(docker_compose_path) }
-      end
-
-      file docker_compose_autocomplete_path do
-        action :delete
-        only_if { ::File.exist?(docker_compose_autocomplete_path) }
-      end
-    end
-
-    unless File.exist?(docker_compose_path)
-      # TODO(hoatle): get the cache file here
+      include_recipe 'docker_compose::uninstallation'
       include_recipe 'docker_compose::installation'
-      # put the cache file here
-    end
-
-    unless File.exist?(docker_compose_autocomplete_path)
-      # TODO(hoatle): get the cache file here
-      autocomplete_url = docker_compose_autocomplete_url
-      # install docker-compose auto complete
-      execute 'install docker-compose autocomplete' do
-        action :run
-        command "curl -sSL #{autocomplete_url} > /etc/bash_completion.d/docker-compose"
-        creates docker_compose_autocomplete_path
-        user 'root'
-        group 'docker'
-        only_if { platform?('ubuntu') }
-      end
-      # put the cache file here
     end
   end
 end
