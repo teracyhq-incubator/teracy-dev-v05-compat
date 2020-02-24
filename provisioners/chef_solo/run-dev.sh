@@ -5,6 +5,7 @@
 # rm -rf main-cookbooks/teracy-dev/Berksfile.lock # always install the latest
 
 echo "install vendor-cookbooks"
+berks update -b main-cookbooks/teracy-dev/Berksfile
 berks vendor -b main-cookbooks/teracy-dev/Berksfile --delete vendor-cookbooks
 
 # chown 1000:1000 main-cookbooks/teracy-dev/Berksfile.lock
