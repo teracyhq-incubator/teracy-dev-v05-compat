@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.5.0][] (2020-02-24)
+
+- Improvements:
+  + should add Github Actions CI check for the project #42
+
+- Bug Fixes:
+  + docker-compose was not re-installed when its version config changed #40
+
+Details: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/5?closed=1
+
+
 ## [v0.4.0][] (2020-02-16)
 
 - Features:
@@ -47,4 +58,4 @@ Details: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/1
 [v0.2.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/2?closed=1
 [v0.3.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/3?closed=1
 [v0.4.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/4?closed=1
-
+[v0.5.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/5?closed=1
