@@ -2,19 +2,211 @@
 
 This file is used to list changes made in each version of the docker cookbook.
 
+## 4.12.0 (2020-01-03)
+
+- Include support for other architectures using upstream repo - [@ramereth](https://github.com/ramereth)
+
+## 4.11.0 (2019-12-16)
+
+- Update format of docker tarball filenames > 18.06.3 - [@smcavallo](https://github.com/smcavallo)
+- Rework integration and unit tests to get everything green again - [@smcavallo](https://github.com/smcavallo)
+- Update the systemd unit file - [@smcavallo](https://github.com/smcavallo)
+- Remove the legacy foodcritic comments that aren't needed since we use cookstyle - [@tas50](https://github.com/tas50)
+
+## 4.10.0 (2019-11-18)
+
+- Cookstyle: Don't set allowed_actions in the resource - [@tas50](https://github.com/tas50)
+- update to the latest version of docker (for security reasons) - [@smcavallo](https://github.com/smcavallo)
+- fixing the default docker version in the kitchen tests - [@smcavallo](https://github.com/smcavallo)
+
+## 4.9.3 (2019-08-14)
+
+- fixes issue #1061, docker_volume 'driver' and 'opts' don't work
+
+## 4.9.2 (2019-02-15)
+
+- Support setting shared memory size.
+
+## 4.9.1 (2019-02-01)
+
+- added systemd_socket_opts for additional configuration of the systemd socket file
+
+## 4.9.0 (2018-12-17)
+
+- Add support for windows - [@smcavallo](https://github.com/smcavallo)
+- Expand ChefSpec testing - [@smcavallo](https://github.com/smcavallo)
+- Fix for when HealthCheck is used - [@smcavallo](https://github.com/smcavallo)
+
+## 4.8.0 (2018-12-09)
+
+- Fix issues with network_mode in docker_container - [@smcavallo](https://github.com/smcavallo)
+- Add support for container health_check options - [@smcavallo](https://github.com/smcavallo)
+- Add new docker_image_prune resource - [@smcavallo](https://github.com/smcavallo)
+
+## 4.7.0 (2018-12-05)
+
+- Added 17.03 support on RHEL 7. Thanks @smcavallo
+- Added 18.09 support. Thanks @smcavallo
+
+## 4.6.8 (2018-11-27)
+
+- add missing new_resource reference that prevented docker_container's reload action from running
+
+## 4.6.7 (2018-10-10)
+
+- Add :default_address_pool property to docker_service
+- Import docker.com repository gpg key via HTTPS directly from docker to avoid timeouts with Ubuntu's key registry
+
+## 4.6.6 (unreleased)
+
+- :default_ip_address_pool property added to configure default address pool for networks created by Docker.
+
+## 4.6.5 (2018-09-04)
+
+- package names changed again. looks like they swapped xenial and bionic name schema.
+
+## 4.6.4 (2018-08-29)
+
+- xenial 18.03 contains the new test version format
+
+## 4.6.3 (2018-08-23)
+
+- refactor version_string
+
+## 4.6.2 (2018-08-23)
+
+- Use different version string on .deb packages
+
+## 4.6.1 (2018-08-21)
+
+- Include setup_docker_repo in docker_service and allow old docker-ce versions for centos
+
+## 4.6.0 (2018-08-19)
+
+- Bump docker version to 18.06.0
+
+## 4.5.0 (2018-08-16)
+
+- sets the default log_level for the systemd docker service back to nil
+- change require relative to library path
+- docker_execute -> docker_exec
+- Loosen up the requirement on docker-api gem
+- Add new docker_plugin resource
+
+## 4.4.1 (2018-07-23)
+
+- Adding tests for docker_container detach == false (container is attached)
+- Add new_resource and current_resource objects as context for methods when telling a container to wait (when detach is false)
+
+## 4.4.0 (2018-07-17)
+
+- docker service :log_level property converted to String.
+- Use new package versioning scheme for Ubuntu bionic
+- Bump the docker version everywhere
+
+## 4.3.0 (2018-06-19)
+
+- Remove the zesty? helper
+- Initial support for Debian Buster (10)
+- Bump the package default to 18.03.0
+- Remove old integration tests
+- Update package specs to pass on Amazon Linux
+
+## 4.2.0 (2018-04-09)
+
+- Initial support for Chef 14
+- Remove unused api_version helper
+- Support additional sysv RHEL like platforms by using platform_family
+- Added oom_kill_disable and oom_score_adj support to docker_container
+- ENV returns nil if the variable isn't found
+- Remove the TLS default helpers
+- Move coerce_labels into docker_container where its used
+- Add desired_state false to a few more properties
+- If the ENV values are nil don't use them to build busted defaults for TLS
+- Remove a giant pile of Chef 12-isms
+- Kill off ArrayType and NonEmptyArray types
+- Don't require docker all over the place
+- Kill the ShellCommand type
+- Fix undefined method `v' for DockerContainer
+- Make to_shellwords idempotent in DockerContainer
+- Fix(Chef14): Use property_is_set with new_resource
+- Use try-restart for systemd & retry start one time
+
+## 4.1.1 (2018-03-11)
+
+- Move to_snake_case to the container resource where it's used
+- Reduce the number of coerce helpers in the the container resource
+- Remove the Boolean type and instead just use TrueClass,FalseClass
+- Use an actual integer in the memory_swappiness test since after reworking the coerce helpers we're requiring what we always stated we required here
+
+## 4.1.0 (2018-03-10)
+
+- Remove required from the name property. This resolves Foodcritic warnings in Foodcritic 13
+- Resolve a pile of Chef 14 deprecation warnings in the container and images resources
+- Remove support for Ubuntu 17.04 from the installation_package resource
+- Moved all the helper libraries into the resources themselves. This is part 1 of the work to get these resources ready for inclusion in Chef 14
+- Removed the version logic from installation_package when on Amazon Linux. Since we don't setup the repo we only have a single version available to us and we should just install that version. This resolves the constant need to update the hardcoded version in the cookbook every time Amazon releases a new Docker version.
+
+## 4.0.2 (2018-03-05)
+
+- Flag registry password property as sensitive in docker_registry resource
+
+## 4.0.1 (2018-02-07)
+
+- allow labels to have colons in the value
+
+## 4.0.0 (2018-01-15)
+
+### Breaking Changes
+
+- Default to Docker 17.12.0
+- Remove previously deprecated support for Debian 7 / CentOS 6\. Currently supported released of Docker do not run on these platforms.
+- Removed support for the EOL Docker 1.12.3
+- Removed the ChefSpec matchers which are no longer needed with ChefDK 2.X
+- Remove the broken legacy binary installation resource. This was only used by very old EOL docker releases
+- By default setup the apt/yum repos in the package install resource so that out of the box there's no need for additional cookbooks. If you would like to manage your own docker repos or other internal repos this may be disabled by property. Due to this change the cookbook now requires Chef 12.15+
+
+### Other Changes
+
+- Greatly expand Travis CI testing of the cookbook and use new InSpec resources for Docker instead of shelling out
+- Add support for Ubuntu 17.10
+- Update Fedora support for new DNF support in Chef
+- Minor correctness and formatting updates to the readme
+- load internal and ipv6 status for existing docker_network resources
+- Update Amazon Linux to default to 17.09.1, which is the current version in their repos
+- Fix the remove action in docker_installation_script
+- Replace deprecated graph with data_root. Graph will now silently map to data_root
+- Pass --host instead of -H in docker_service for clarity
+- Make sure tar is installed to decompress the tarball in the docker_installation_tarball resource
+- Update the download path for Docker CE to unbreak docker_installation_tarball
+- Allow specifying channels in the docker_installation_tarball resource so you can install non-stable releases
+
+## 3.0.0 (2017-12-22)
+
+- Install docker-api via gem metadata. This bumps the required chef release for this cookbook to 12.10+
+- Removed support for Ubuntu Precise
+- Reworked the init system detection logic to work on additional platforms and without hardcoded distro version numbers
+- Removed shasums from the binary installation resource for Docker 1.6-1.9.1 which are long ago EOL Docker releases
+- Test on newer releases of openSUSE and Fedora and test on the latest Docker release
+
 ## 2.17.0 (2017-11-10)
- - Update Amazon Linux to default to 17.06.2
+
+- Update Amazon Linux to default to 17.06.2
 
 ## 2.16.4 (2017-10-30)
+
 - quote log_opt
 
 ## 2.16.3 (2017-10-26)
+
 - add init support to docker_container
 
 ## 2.16.2 (2017-10-05)
+
 - fix for ip_address not being set
 
 ## 2.16.1 (2017-10-05)
+
 - added support for env_file property
 - bumping to 17.09.0
 
@@ -1041,7 +1233,7 @@ switching systemd unit MountFlags from slave to private
 ## v1.0.17
 
 - Fixing up regressions in older Docker API versions introduced in cookbook release 1.0.15
-- _ Adding @api_version instance variable
+- Adding @api_version instance variable
 - Adding serialized_log_config
 - Adding parsed_network_mode
 
