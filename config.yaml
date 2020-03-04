@@ -65,10 +65,11 @@ nodes:
       - _id: "v05-compat-chef"
         _id_deprecated: 'v05-compat-0'
         name: teracy-dev-v05-compat
-        version: 13.1.31
+        version: 15.8.23
         type: chef_solo
         log_level: info
         enabled: true
+        arguments: "--chef-license accept"
         # Please update right cookbooks, role, nodes, data_bags and run_list path in you entry config
         cookbooks_path:
           - "%{teracy-dev-v05-compat-path}/provisioners/chef_solo/vendor-cookbooks"
