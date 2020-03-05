@@ -16,13 +16,13 @@ fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|
 ([0-9a-fA-F]{1,4}:){1,4}:
 ((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}
 (25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])
-)/
+)/.freeze
 
-IPV4_ADDR ||= /((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])/
+IPV4_ADDR ||= /((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])/.freeze
 
-IPV6_CIDR ||= /s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*/
+IPV6_CIDR ||= /s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*/.freeze
 
-IPV4_CIDR ||= %r{(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))}
+IPV4_CIDR ||= %r{(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))}.freeze
 
 module DockerCookbook
   module DockerHelpers
@@ -58,13 +58,13 @@ module DockerCookbook
           c_a = 3 if a =~ %r{^tcp://127.0.0.1:}
           c_a = 4 if a =~ %r{^tcp://(192\.168|10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.).*:}
           c_a = 5 if a =~ %r{^tcp://0.0.0.0:}
-          c_a = 6 unless c_a
+          c_a ||= 6
           c_b = 1 if b =~ /^unix:/
           c_b = 2 if b =~ /^fd:/
           c_b = 3 if b =~ %r{^tcp://127.0.0.1:}
           c_b = 4 if b =~ %r{^tcp://(192\.168|10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.).*:}
           c_b = 5 if b =~ %r{^tcp://0.0.0.0:}
-          c_b = 6 unless c_b
+          c_b ||= 6
           c_a <=> c_b
         end
         if sorted.first =~ %r{^tcp://0.0.0.0:}
@@ -80,10 +80,10 @@ module DockerCookbook
         sorted = coerce_host(host).sort do |a, b|
           c_a = 1 if a =~ /^unix:/
           c_a = 2 if a =~ /^fd:/
-          c_a = 3 unless c_a
+          c_a ||= 3
           c_b = 1 if b =~ /^unix:/
           c_b = 2 if b =~ /^fd:/
-          c_b = 3 unless c_b
+          c_b ||= 3
           c_a <=> c_b
         end
         sorted.first.sub(%r{unix://|fd://}, '')
@@ -123,6 +123,10 @@ module DockerCookbook
         end
       end
 
+      def containerd_daemon_opts
+        ['--containerd=/run/containerd/containerd.sock'].join(' ')
+      end
+
       def docker_major_version
         ray = installed_docker_version.split('.')
         ray.pop
@@ -148,7 +152,7 @@ module DockerCookbook
       end
 
       def docker_daemon_cmd
-        [dockerd_bin, docker_daemon_arg, docker_daemon_opts].join(' ')
+        [dockerd_bin, docker_daemon_arg, docker_daemon_opts, containerd_daemon_opts].join(' ')
       end
 
       def docker_cmd
@@ -174,6 +178,12 @@ module DockerCookbook
         opts
       end
 
+      def systemd_socket_args
+        opts = ''
+        systemd_socket_opts.each { |systemd_socket_opt| opts << "#{systemd_socket_opt}\n" } if systemd_socket_opts
+        opts
+      end
+
       def docker_daemon_opts
         opts = []
         opts << "--api-cors-header=#{api_cors_header}" if api_cors_header
@@ -191,8 +201,9 @@ module DockerCookbook
         opts << "--fixed-cidr=#{fixed_cidr}" if fixed_cidr
         opts << "--fixed-cidr-v6=#{fixed_cidr_v6}" if fixed_cidr_v6
         opts << "--group=#{group}" if group
-        opts << "--graph=#{graph}" if graph
-        host.each { |h| opts << "-H #{h}" } if host
+        opts << "--data-root=#{data_root}" if data_root
+        opts << "--default-address-pool=#{default_ip_address_pool}" unless default_ip_address_pool.nil?
+        host.each { |h| opts << "--host #{h}" } if host
         opts << "--icc=#{icc}" unless icc.nil?
         insecure_registry.each { |i| opts << "--insecure-registry=#{i}" } if insecure_registry
         opts << "--ip=#{ip}" if ip
@@ -227,6 +238,6 @@ module DockerCookbook
         return true if o.stdout =~ /CONTAINER/
         false
       end
-    end
+    end unless defined?(DockerCookbook::DockerHelpers::Service)
   end
 end

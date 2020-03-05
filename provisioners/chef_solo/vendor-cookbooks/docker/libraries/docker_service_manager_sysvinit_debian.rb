@@ -2,20 +2,12 @@ module DockerCookbook
   class DockerServiceManagerSysvinitDebian < DockerServiceBase
     resource_name :docker_service_manager_sysvinit_debian
 
-    provides :docker_service_manager, platform: 'debian' do |node| # ~FC005
+    provides :docker_service_manager, platform: 'debian' do |node|
       node['platform_version'].to_f < 8.0
-    end
-
-    provides :docker_service_manager, platform: 'ubuntu' do |node|
-      node['platform_version'].to_f < 12.04
     end
 
     provides :docker_service_manager_sysvinit, platform: 'debian' do |node|
       node['platform_version'].to_f < 8.0
-    end
-
-    provides :docker_service_manager_sysvinit, platform: 'ubuntu' do |node|
-      node['platform_version'].to_f < 12.04
     end
 
     action :start do
