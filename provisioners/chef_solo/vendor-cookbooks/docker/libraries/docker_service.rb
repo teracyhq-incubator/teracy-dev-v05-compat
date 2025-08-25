@@ -8,11 +8,11 @@ module DockerCookbook
     provides :docker_service
 
     # installation type and service_manager
-    property :install_method, %w(script package tarball none auto), default: 'auto', desired_state: false
+    property :install_method, %w(script package tarball none auto), default: lazy { docker_install_method }, desired_state: false
     property :service_manager, %w(execute sysvinit upstart systemd auto), default: 'auto', desired_state: false
 
     # docker_installation_script
-    property :repo, desired_state: false
+    property :repo, String, desired_state: false
     property :script_url, String, desired_state: false
 
     # docker_installation_tarball
@@ -23,7 +23,7 @@ module DockerCookbook
     # docker_installation_package
     property :package_version, String, desired_state: false
     property :package_name, String, desired_state: false
-    property :setup_docker_repo, [TrueClass, FalseClass], desired_state: false
+    property :setup_docker_repo, [true, false], desired_state: false
 
     # package and tarball
     property :version, String, desired_state: false
@@ -78,8 +78,6 @@ module DockerCookbook
           svc = docker_service_manager_execute(new_resource.name, &block)
         when 'sysvinit'
           svc = docker_service_manager_sysvinit(new_resource.name, &block)
-        when 'upstart'
-          svc = docker_service_manager_upstart(new_resource.name, &block)
         when 'systemd'
           svc = docker_service_manager_systemd(new_resource.name, &block)
         end

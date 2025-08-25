@@ -1,10 +1,11 @@
 module DockerCookbook
   class DockerPlugin < DockerBase
     resource_name :docker_plugin
+    provides :docker_plugin
 
     property :local_alias, String, name_property: true
     property :remote_tag, String, default: 'latest'
-    property :remote, [String, nil], default: nil
+    property :remote, [String, nil]
     property :grant_privileges, [Array, TrueClass], default: []
     property :options, Hash, default: {}
 
@@ -42,7 +43,7 @@ module DockerCookbook
       end
     end
 
-    declare_action_class.class_eval do
+    action_class do
       def remote_name
         return new_resource.remote unless new_resource.remote.nil? || new_resource.remote.empty?
         new_resource.local_alias

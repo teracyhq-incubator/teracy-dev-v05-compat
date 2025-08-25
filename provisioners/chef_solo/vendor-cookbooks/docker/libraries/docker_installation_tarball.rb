@@ -1,11 +1,12 @@
 module DockerCookbook
   class DockerInstallationTarball < DockerBase
     resource_name :docker_installation_tarball
+    provides :docker_installation_tarball
 
     property :checksum, String, default: lazy { default_checksum }, desired_state: false
     property :source, String, default: lazy { default_source }, desired_state: false
     property :channel, String, default: 'stable', desired_state: false
-    property :version, String, default: '19.03.5', desired_state: false
+    property :version, String, default: '20.10.1', desired_state: false
 
     ##################
     # Property Helpers
@@ -40,19 +41,19 @@ module DockerCookbook
       case docker_kernel
       when 'Darwin'
         case version
-        when '17.12.0' then 'dc673421e0368c2c970203350a9d0cb739bc498c897e832779369b0b2a9c6192'
-        when '18.03.0' then '2d44ed2ac1e24cb22b6e72cb16d74fc9e60245a8ac1d4f79475604b804f46d38'
         when '18.03.1' then 'bbfb9c599a4fdb45523496c2ead191056ff43d6be90cf0e348421dd56bc3dcf0'
-        when '18.06.0' then '5489360ae1894375a56255fb821fcf368b33027cd4f4bbaebf5176c05b79f420'
-        when '19.03.5' then 'fd62b9239045a7356c9d36492779b8611dc783f455f5bf66a77b0bd7b2ec3913'
+        when '18.06.3' then 'f7347ef27db9a438b05b8f82cd4c017af5693fe26202d9b3babf750df3e05e0c'
+        when '18.09.9' then 'ed83a3d51fef2bbcdb19d091ff0690a233aed4bbb47d2f7860d377196e0143a0'
+        when '19.03.14' then '7fbf94a39f0034035c129ca7463234263015e97f7e5747beaf6a8ba9e535e0c3'
+        when '20.10.1' then 'bfcbfa86b7df1c1312293ccf7faf29dd55ec501e5bbdc9cb38eb47ed976e554c'
         end
       when 'Linux'
         case version
-        when '17.12.0' then '692e1c72937f6214b1038def84463018d8e320c8eaf8530546c84c2f8f9c767d'
-        when '18.03.0' then 'e5dff6245172081dbf14285dafe4dede761f8bc1750310156b89928dbf56a9ee'
         when '18.03.1' then '0e245c42de8a21799ab11179a4fce43b494ce173a8a2d6567ea6825d6c5265aa'
-        when '18.06.0' then '1c2fa625496465c68b856db0ba850eaad7a16221ca153661ca718de4a2217705'
-        when '19.03.5' then '50cdf38749642ec43d6ac50f4a3f1f7f6ac688e8d8b4e1c5b7be06e1a82f06e9'
+        when '18.06.3' then '346f9394393ee8db5f8bd1e229ee9d90e5b36931bdd754308b2ae68884dd6822'
+        when '18.09.9' then '82a362af7689038c51573e0fd0554da8703f0d06f4dfe95dd5bda5acf0ae45fb'
+        when '19.03.14' then '9f1ec28e357a8f18e9561129239caf9c0807d74756e21cc63637c7fdeaafe847'
+        when '20.10.1' then '8790f3b94ee07ca69a9fdbd1310cbffc729af0a07e5bf9f34a79df1e13d2e50e'
         end
       end
     end
@@ -78,7 +79,10 @@ module DockerCookbook
       execute 'extract tarball' do
         action :nothing
         command "tar -xzf #{docker_tarball} --strip-components=1 -C #{docker_bin_prefix}"
-        creates docker_bin
+      end
+
+      group 'docker' do
+        system true
       end
     end
 
@@ -86,12 +90,16 @@ module DockerCookbook
       file docker_bin do
         action :delete
       end
+
+      group 'docker' do
+        action :delete
+      end
     end
 
     ################
     # Action Helpers
     ################
-    declare_action_class.class_eval do
+    action_class do
       def docker_bin_prefix
         '/usr/bin'
       end

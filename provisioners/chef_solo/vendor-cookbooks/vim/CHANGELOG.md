@@ -2,6 +2,76 @@
 
 This file is used to list changes made in each version of the vim cookbook.
 
+## 2.1.22 - *2024-05-03*
+
+## 2.1.21 - *2024-05-03*
+
+## 2.1.20 - *2023-09-28*
+
+## 2.1.19 - *2023-09-04*
+
+## 2.1.18 - *2023-09-04*
+
+## 2.1.17 - *2023-05-17*
+
+## 2.1.16 - *2023-04-17*
+
+## 2.1.15 - *2023-04-07*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 2.1.14 - *2023-04-01*
+
+## 2.1.13 - *2023-04-01*
+
+## 2.1.12 - *2023-04-01*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 2.1.11 - *2023-03-20*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 2.1.10 - *2023-03-15*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 2.1.9 - *2023-03-01*
+
+## 2.1.8 - *2023-02-23*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 2.1.7 - *2023-02-15*
+
+## 2.1.6 - *2023-02-14*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 2.1.5 - *2022-12-15*
+
+Standardise files with files in sous-chefs/repo-management
+
+Standardise files with files in sous-chefs/repo-management
+
+## 2.1.4 - *2022-02-07*
+
+- Remove delivery and move to calling RSpec directly via a reusable workflow
+- Update tested platforms
+- Standardise files with files in sous-chefs/repo-management
+
+## 2.1.3 - *2021-08-30*
+
+- Standardise files with files in sous-chefs/repo-management
+
+## 2.1.2 - *2021-06-01*
+
+- Standardise files with files in sous-chefs/repo-management
+
+## 2.1.1 - *2021-05-28*
+
+- Fix builds
+
 ## 2.1.0 (2020-01-10)
 
 - Remove chef 11 compat in metadata - [@tas50](https://github.com/tas50)
