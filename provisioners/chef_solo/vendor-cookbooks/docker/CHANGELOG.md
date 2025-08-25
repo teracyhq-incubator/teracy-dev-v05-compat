@@ -1,6 +1,203 @@
-# Docker Cookbook Changelog
+# docker Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the docker cookbook.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## 8.3.0 - *2021-09-13*
+
+- Remove Ubuntu 16.04 from the GitHub Actions test matrix
+- Add amazonlinux-2 to the test matrix
+
+## 8.2.4 - *2021-09-09*
+
+- Ensure docker_container :health_check is idempotent
+
+## 8.2.3 - *2021-09-08*
+
+- Fix private registries credentials handling and public registries
+
+## 8.2.2 - *2021-08-27*
+
+- Use new action_class instead of declare_action_class.class_eval for helper methods in resources
+
+## 8.2.1 - *2021-08-26*
+
+- Ensure `docker_container :user` is idempotent
+
+## 8.2.0 - *2021-08-26*
+
+- Ensure `docker_container :health_check` is idempotent
+
+## 8.1.0 - *2021-08-25*
+
+- Remove Ubuntu 16.04 support now it's end of life
+
+## 8.0.1 - *2021-08-25*
+
+## 8.0.0 - *2021-08-25*
+
+- Remove upstart docker service manage
+  - We don't officialy support any distros that use upstart anymore
+
+## 7.7.8 - *2021-08-25
+
+## 7.7.7 - *2021-08-24*
+
+- Update port syntax for `docker_container`
+
+## 7.7.6 - *2021-08-24*
+
+## 7.7.5 - *2021-08-24*
+
+- Disable installation-script-main suite on Debian 9 due to lack of upstream support
+
+## 7.7.4 - *2021-08-24*
+
+## 7.7.3 - *2021-07-17*
+
+- Ensure `docker_image :load` is idempotent
+
+## 7.7.2 - *2021-07-01*
+
+- Fix `installed_docker_version` method on ppc64le which appends `v` to the version
+
+## 7.7.1 - *2021-06-30*
+
+- Fix package installation on RHEL s390x architecture
+
+## 7.7.0 - *2021-02-26*
+
+- Add `buildargs` property to `docker_image` resource
+
+## 7.6.1 - *2021-01-11*
+
+- Fixed `reload_signal` and `cpus` bug for `docker_container` in #1090 [@urlund](https://github.com/urlund)
+
+## 7.6.0 - *2021-01-06*
+
+- Support for loki-docker driver logging plugin
+
+## 7.5.0 - *2021-01-04*
+
+- Update to use 20.10 by default
+- Update tarball for 19.03 to 19.03.14
+
+## 7.4.1 - *2021-01-01*
+
+- Fix the codeowners to use the correct group
+
+## 7.4.0 - *2020-12-04*
+
+- Support `local`  option for the `log_driver` properties of `docker_service` and `docker_container` resources
+
+## 7.3.0 - *2020-12-02*
+
+- Updates the `registry_mirror` option of `docker_service` to be either a string or array. This way multiple mirrors can be configured
+
+## 7.2.2 (2020-11-05)
+
+- Remove creates guard for extracting tarball which prevents upgrades
+
+## 7.2.1 (2020-11-03)
+
+- Fix issue with `default-ip-addr` in systemd
+
+## 7.2.0 (2020-10-26)
+
+- Add `cpus` options to `docker_container`
+
+## 7.1.0 (2020-10-23)
+
+### Changed
+
+- Sous Chefs Adoption
+- Update Changelog to Sous Chefs
+- Update to use Sous Chefs GH workflow
+- Disable installation-script-experimental
+- Update README to sous-chefs
+- Update metadata.rb to Sous Chefs
+- Update tarball version to 19.03.13
+- Update tarball suite tests
+- Update tarball checksums to latest versions
+
+### Fixed
+
+- Cookstyle fixes
+- Update and fix ChefSpec tests
+- Yamllint fixes
+- MDL Fixes
+- Loosen docker-api gem to allow >= 1.34, < 3.0 (resolves #1135)
+- Update test recipes/tests so they can work with Cinc
+- Ensure `docker` group exists for tarball installation
+- Enable containerd systemd unit if binary exists
+
+### Added
+
+- Add testing for CentOS 8
+- Add testing for Ubuntu 20.04
+- Add `docker_install_method` helper to automate install method
+- Add `container.service` unit for tarball installation method
+
+### Removed
+
+- Disable broken tests and `resources` suite
+
+## 7.0.0 (2020-08-31)
+
+### Breaking Change
+
+The 7.0 release includes a breaking change to package installs with version specified. Before this change RHEL based systems allowed specifying any valid version string (19, 19.03, 19.03.8) and an * was added automatically to package name for specified version installation. New change specifies docker-ce package name and uses package resource version option to specify version. The version option default has been removed and thus will default to the lastest version. If version option is specified it'll lock the package to that version. Debian family machines are unaffected by the change. With this change we will not need to constantly release new versions of the cookbook for new releases of Docker.
+
+## 6.0.3 (2020-06-15)
+
+- Removed default value for properties working_dir and memory_swap. - [@antima-gupta](https://github.com/antima-gupta)
+- Updated memory_swap default value 0 to nil - [@antima-gupta](https://github.com/antima-gupta)
+- Fix for docker_exec does not check the return code of the command it runs - [@kapilchouhan99](https://github.com/kapilchouhan99)
+- Add provides in addition to resource_name to all resources - [@tas50](https://github.com/tas50)
+
+## 6.0.2 (2020-06-02)
+
+- Standardise files with files in chef-cookbooks/repo-management - [@xorimabot](https://github.com/xorimabot)
+- Resolved deprecations to provide Chef Infra Client 16 compatibility - [@xorimabot](https://github.com/xorimabot)
+  - resolved cookstyle error: libraries/docker_container.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_exec.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_image.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_image_prune.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_installation_package.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_installation_tarball.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_network.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_plugin.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_registry.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_service_manager_execute.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_tag.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: libraries/docker_volume.rb:3:5 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+
+## 6.0.1 (2020-05-26)
+
+- Allow configuring reload signal #1089 - [@scalp42](https://github.com/scalp42)
+- Update docker_image doc to fix escaping typo - [@pgilad](https://github.com/pgilad)
+- Fix for env_file breaks on Chef 16 - [@kapilchouhan99](https://github.com/kapilchouhan99)
+
+## 6.0.0 (2020-04-28)
+
+- Require Chef Infra Client 15+ to fix issues with package versions on RHEL / Fedora since Chef Infra Client 15 reworked how yum_package performed and let us now pass in human readable versions to be installed- [@tas50](https://github.com/tas50)
+
+## 5.0.0 (2020-04-28)
+
+- Fix missing reference to new_resource.restart_policy - [@petracvv](https://github.com/petracvv)
+- Add testing with Github Actions - [@tas50](https://github.com/tas50)
+- Added debian 10 support
+- Add 'live_restore' property to 'docker_service'
+- Use new_resource to read attribute - [@dud225](https://github.com/dud225)
+- set default ipc_mode to shareable to prevent redeploying containers on each run - [@dheerajd-msys](https://github.com/dheerajd-msys)
+- Cookstyle fix - [@tas50](https://github.com/tas50)
+- Remove legacy Amazon Linux 201x support. This cookbook now requires Amazon Linux 2 - [@tas50](https://github.com/tas50)
+- Remove support for EOL Ubuntu distros 14.04 and 17.10 - [@tas50](https://github.com/tas50)
+- install_package: Remove support for Docker 17.03 and earlier - [@tas50](https://github.com/tas50)
+- Require Chef Infra Client 13 or later - [@tas50](https://github.com/tas50)
+- Simplify the platform detection code - [@tas50](https://github.com/tas50)
 
 ## 4.12.0 (2020-01-03)
 
@@ -57,7 +254,7 @@ This file is used to list changes made in each version of the docker cookbook.
 - Add :default_address_pool property to docker_service
 - Import docker.com repository gpg key via HTTPS directly from docker to avoid timeouts with Ubuntu's key registry
 
-## 4.6.6 (unreleased)
+## 4.6.6 (7.3.0 - *2020-12-02*)
 
 - :default_ip_address_pool property added to configure default address pool for networks created by Docker.
 
@@ -1567,7 +1764,7 @@ This release deprecates AUFS/device-mapper handling from chef-docker, but provid
 
 # 0.32.0
 
-_If you're using CentOS/RHEL with EPEL, upcoming docker-io 0.9.0 package upgrade can be tracked at [Bugzilla 1074880](https://bugzilla.redhat.com/show_bug.cgi?id=1074880)_
+## If you're using CentOS/RHEL with EPEL, upcoming docker-io 0.9.0 package upgrade can be tracked at [Bugzilla 1074880](https://bugzilla.redhat.com/show_bug.cgi?id=1074880)
 
 This release includes Docker 0.9.0 changes and defaults, such as setting exec_driver to libcontainer ("native"), setting -rm on docker build, double dash arguments on the CLI, additional flags, etc.
 

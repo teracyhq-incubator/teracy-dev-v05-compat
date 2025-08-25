@@ -1,5 +1,5 @@
 DEPENDENCIES
-  docker (~> 4.12.0)
+  docker (~> 8.3.0)
   docker_compose
     git: https://github.com/teracyhq-incubator/chef-cookbook-docker_compose.git
     revision: 9d73b645ada28a0aa4dbdc7dbd392ce83050d910
@@ -8,7 +8,7 @@ DEPENDENCIES
   vim (~> 2.1.0)
 
 GRAPH
-  docker (4.12.0)
+  docker (8.3.0)
   docker_compose (0.2.0)
   magic_shell (1.0.0)
-  vim (2.1.0)
+  vim (2.1.22)

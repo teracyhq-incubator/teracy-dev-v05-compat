@@ -1,25 +1,35 @@
 module DockerCookbook
   class DockerImage < DockerBase
     resource_name :docker_image
+    provides :docker_image
 
     # Modify the default of read_timeout from 60 to 120
-    property :read_timeout, default: 120, desired_state: false
+    property :read_timeout, Integer, default: 120, desired_state: false
 
     # https://docs.docker.com/engine/api/v1.35/#tag/Image
     property :destination, String
-    property :force, [TrueClass, FalseClass], default: false, desired_state: false
+    property :force, [true, false], default: false, desired_state: false
     property :host, [String, nil], default: lazy { ENV['DOCKER_HOST'] }, desired_state: false
-    property :nocache, [TrueClass, FalseClass], default: false
-    property :noprune, [TrueClass, FalseClass], default: false
+    property :nocache, [true, false], default: false
+    property :noprune, [true, false], default: false
     property :repo, String, name_property: true
-    property :rm, [TrueClass, FalseClass], default: true
+    property :rm, [true, false], default: true
     property :source, String
     property :tag, String, default: 'latest'
+    property :buildargs, [String, Hash], coerce: proc { |v| v.is_a?(String) ? v : coerce_buildargs(v) }
 
     alias_method :image, :repo
     alias_method :image_name, :repo
     alias_method :no_cache, :nocache
     alias_method :no_prune, :noprune
+
+    ###################
+    # Property helpers
+    ###################
+
+    def coerce_buildargs(v)
+      "{ #{v.map { |key, value| "\"#{key}\": \"#{value}\"" }.join(', ')} }"
+    end
 
     #########
     # Actions
@@ -76,12 +86,13 @@ module DockerCookbook
     end
 
     action :load do
+      return if Docker::Image.exist?(image_identifier, {}, connection)
       converge_by "load image #{image_identifier}" do
         load_image
       end
     end
 
-    declare_action_class.class_eval do
+    action_class do
       ################
       # Helper methods
       ################
@@ -92,6 +103,7 @@ module DockerCookbook
           {
             'nocache' => new_resource.nocache,
             'rm' => new_resource.rm,
+            'buildargs' => new_resource.buildargs,
           },
           connection
         )
@@ -104,6 +116,7 @@ module DockerCookbook
           {
             'nocache' => new_resource.nocache,
             'rm' => new_resource.rm,
+            'buildargs' => new_resource.buildargs,
           },
           connection
         )
@@ -116,6 +129,7 @@ module DockerCookbook
           {
             'nocache' => new_resource.nocache,
             'rm' => new_resource.rm,
+            'buildargs' => new_resource.buildargs,
           },
           connection
         )
@@ -182,7 +196,7 @@ module DockerCookbook
 
       def credentails
         registry_host = parse_registry_host(new_resource.repo)
-        node.run_state['docker_auth'] && node.run_state['docker_auth'][registry_host] || (node.run_state['docker_auth'] ||= {})['index.docker.io']
+        node.run_state['docker_auth'] && node.run_state['docker_auth'][registry_host] || {}
       end
     end
   end

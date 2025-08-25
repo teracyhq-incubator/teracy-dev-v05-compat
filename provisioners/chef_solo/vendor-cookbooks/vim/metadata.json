@@ -1,1 +1,47 @@
-{"name":"vim","version":"2.1.0","description":"Installs vim and optional extra packages.","long_description":"","maintainer":"Chef Software, Inc.","maintainer_email":"cookbooks@chef.io","license":"Apache-2.0","platforms":{"debian":">= 0.0.0","ubuntu":">= 0.0.0","redhat":">= 0.0.0","centos":">= 0.0.0","fedora":">= 0.0.0","scientific":">= 0.0.0","oracle":">= 0.0.0","amazon":">= 0.0.0","zlinux":">= 0.0.0","suse":">= 0.0.0","opensuse":">= 0.0.0","opensuseleap":">= 0.0.0"},"dependencies":{},"recommendations":{},"suggestions":{},"conflicting":{},"providing":{},"replacing":{},"attributes":{},"groupings":{},"recipes":{},"source_url":"https://github.com/chef-cookbooks/vim","issues_url":"https://github.com/chef-cookbooks/vim/issues","chef_version":[[">= 12.15"]],"ohai_version":[]}
+{
+  "name": "vim",
+  "description": "Installs vim and optional extra packages.",
+  "long_description": "",
+  "maintainer": "Chef Software, Inc.",
+  "maintainer_email": "cookbooks@chef.io",
+  "license": "Apache-2.0",
+  "platforms": {
+    "debian": ">= 0.0.0",
+    "ubuntu": ">= 0.0.0",
+    "redhat": ">= 0.0.0",
+    "centos": ">= 0.0.0",
+    "fedora": ">= 0.0.0",
+    "scientific": ">= 0.0.0",
+    "oracle": ">= 0.0.0",
+    "amazon": ">= 0.0.0",
+    "zlinux": ">= 0.0.0",
+    "suse": ">= 0.0.0",
+    "opensuse": ">= 0.0.0",
+    "opensuseleap": ">= 0.0.0"
+  },
+  "dependencies": {
+
+  },
+  "providing": {
+
+  },
+  "recipes": {
+
+  },
+  "version": "2.1.22",
+  "source_url": "https://github.com/chef-cookbooks/vim",
+  "issues_url": "https://github.com/chef-cookbooks/vim/issues",
+  "privacy": false,
+  "chef_versions": [
+    [
+      ">= 12.15"
+    ]
+  ],
+  "ohai_versions": [
+
+  ],
+  "gems": [
+
+  ],
+  "eager_load_libraries": true
+}
