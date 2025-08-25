@@ -17,7 +17,7 @@ jobs:
     - name: Lint main-cookbooks
       run: |
         cd provisioners/chef_solo
-        docker-compose up --exit-code-from lint lint
+        docker compose up --exit-code-from lint lint
 
   update:
     needs: [verify]
@@ -28,7 +28,7 @@ jobs:
     - name: Install vendor-cookbooks
       run: |
         cd provisioners/chef_solo
-        docker-compose up --exit-code-from install install
+        docker compose up --exit-code-from install install
 
     # only on develop branch
     - name: Commit files
