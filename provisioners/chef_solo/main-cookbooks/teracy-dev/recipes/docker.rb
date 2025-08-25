@@ -93,9 +93,9 @@ if docker_conf['enabled'] == true
       package_options docker_conf['package_options']
     end
   else
-    docker_installation 'default' do
-      repo docker_conf['repo']
+    docker_installation_package 'default' do
       action act
+      package_options docker_conf['package_options']
     end
   end
 
