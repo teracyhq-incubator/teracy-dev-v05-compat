@@ -1,6 +1,5 @@
 # Docker Cookbook
 
-[![Cookbook Version](https://img.shields.io/cookbook/v/docker.svg)](https://supermarket.chef.io/cookbooks/docker)
 [![CI State](https://github.com/sous-chefs/docker/workflows/ci/badge.svg)](https://github.com/sous-chefs/docker/actions?query=workflow%3Aci)
 [![OpenCollective](https://opencollective.com/sous-chefs/backers/badge.svg)](#backers)
 [![OpenCollective](https://opencollective.com/sous-chefs/sponsors/badge.svg)](#sponsors)
@@ -18,16 +17,15 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 
 ## Requirements
 
-- Chef Infra Client 15 or later
 - Network accessible web server hosting the docker binary.
 - SELinux permissive/disabled if CentOS [Docker Issue #15498](https://github.com/docker/docker/issues/15498)
 
 ## Platform Support
 
 - Amazon Linux 2
-- Debian 9/10
+- Debian 9/10/11
 - Fedora
-- Ubuntu 18.04/20.04
+- Ubuntu 18.04/20.04/22.04
 - CentOS 7/8
 
 ## Cookbook Dependencies
@@ -68,31 +66,32 @@ end
 
 ## Test Cookbooks as Examples
 
-The cookbooks ran under test-kitchen make excellent usage examples.
+The cookbooks run by test-kitchen make excellent usage examples.
 
-The test recipes are found at:
-
-```text
-test/cookbooks/docker_test/
-```
+Those recipes are found at `test/cookbooks/docker_test`.
 
 ## Resources Overview
 
-- [docker_service](#docker_service): composite resource that uses docker_installation and docker_service_manager
-- [docker_installation](#docker_installation): automatically select an installation method
-- [docker_service_manager](#docker_service_manager): automatically selects a service manager
-- [docker_installation_script](#docker_installation_script): curl | bash
-- [docker_installation_package](#docker_installation_package): package 'docker-ce'
-- [docker_service_manager_execute](#docker_service_manager_execute): manage docker daemon with Chef
-- [docker_service_manager_sysvinit](#docker_service_manager_sysvinit): manage docker daemon with a sysvinit script
-- [docker_service_manager_systemd](#docker_service_manager_systemd): manage docker daemon with systemd unit files
-- [docker_image](#docker_image): image/repository operations
-- [docker_container](#docker_container): container operations
-- [docker_tag](#docker_tag): image tagging operations
-- [docker_registry](#docker_registry): registry operations
-- [docker_network](#docker_network): network operations
-- [docker_volume](#docker_volume): volume operations
-- [docker_plugin](#docker_plugin): plugin operations
+- [docker_service](documentation/docker_service.md): composite resource that uses docker_installation and docker_service_manager
+- [docker_container](documentation/docker_container.md): container operations
+- [docker_exec](documentation/docker_exec.md): execute commands inside running containers
+- [docker_image](documentation/docker_image.md): image/repository operations
+- [docker_image_prune](documentation/docker_image_prune.md): remove unused docker images
+- [docker_installation_package](documentation/docker_installation_package.md): install Docker via package 'docker-ce'
+- [docker_installation_script](documentation/docker_installation_script.md): install Docker via curl | bash
+- [docker_installation_tarball](documentation/docker_installation_tarball.md): install Docker from a tarball
+- [docker_network](documentation/docker_network.md): network operations
+- [docker_plugin](documentation/docker_plugin.md): plugin operations
+- [docker_registry](documentation/docker_registry.md): registry operations
+- [docker_service_manager_execute](documentation/docker_service_manager_execute.md): manage docker daemon with Chef
+- [docker_service_manager_systemd](documentation/docker_service_manager_systemd.md): manage docker daemon with systemd unit files
+- [docker_tag](documentation/docker_tag.md): image tagging operations
+- [docker_volume](documentation/docker_volume.md): volume operations
+- [docker_volume_prune](documentation/docker_volume_prune.md): remove unused docker volumes
+- [docker_swarm_init](documentation/docker_swarm_init.md): initialize a new Docker swarm cluster
+- [docker_swarm_join](documentation/docker_swarm_join.md): join a node to a Docker swarm cluster
+- [docker_swarm_service](documentation/docker_swarm_service.md): manage Docker swarm services
+- [docker_swarm_token](documentation/docker_swarm_token.md): manage Docker swarm tokens
 
 ## Getting Started
 
@@ -235,7 +234,7 @@ The `docker_installation_package` resource uses the system package manager to in
 
 ```ruby
 docker_installation_package 'default' do
-  version '20.10.1'
+  version '20.10.11'
   action :create
   package_options %q|--force-yes -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-all'| # if Ubuntu for example
 end
@@ -269,17 +268,6 @@ end
 ```ruby
 docker_service_manager_execute 'default' do
   action :start
-end
-```
-
-## docker_service_manager_sysvinit
-
-### Example
-
-```ruby
-docker_service_manager_sysvinit 'default' do
-  host 'unix:///var/run/docker.sock'
-  action :stop
 end
 ```
 
