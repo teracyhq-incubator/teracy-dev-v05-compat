@@ -31,6 +31,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# NOTE: Don't use the same attributes from docker cookbook to avoid overlapping
 docker_conf = node['docker']
 
 def docker_compose_release
@@ -72,19 +73,21 @@ if docker_conf['enabled'] == true
     act = :delete
   end
 
-  if docker_conf['version'] && !docker_conf['version'].empty?
+  if docker_conf['ver'] && !docker_conf['ver'].empty?
 
     docker_installation_package 'default' do
-      version docker_conf['version']
+      version docker_conf['ver']
       action act
-      package_options docker_conf['package_options']
+      package_options docker_conf['pkg_options']
     end
 
   else
+
     docker_installation_package 'default' do
       action act
-      package_options docker_conf['package_options']
+      package_options docker_conf['pkg_options']
     end
+
   end
 
   group 'docker' do

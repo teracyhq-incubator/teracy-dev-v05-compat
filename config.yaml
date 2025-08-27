@@ -85,10 +85,9 @@ nodes:
           # separated as we did before, this is for advanded users only
           docker:
             enabled: true
-            version: '' # use this to install a specific docker version, default: ""
+            ver: '' # use this to install a specific docker version, default: "" means latest
             # used along with the version key, this is default for Ubuntu
-            package_options: "--force-yes -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-all'"
-            repo: main # one of main, test, experimental, default: "main"
+            pkg_options: "--force-yes -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-all'"
             members:
               - vagrant # to append this member to "docker" group
             action: create # one of create, delete. Default: create
