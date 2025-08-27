@@ -72,26 +72,14 @@ if docker_conf['enabled'] == true
     act = :delete
   end
 
-  if !docker_conf['version'].empty?
-    # to make sure docker-engine is added into the package
-    # see: https://github.com/teracyhq/dev/issues/278
-    docker_installation 'default' do
-      repo docker_conf['repo']
-      action act
-      not_if 'which docker'
-    end
-
-    # TODO(hoatle): better to uninstall only if the 2 versions mismatch
-    docker_installation 'default' do
-      repo docker_conf['repo']
-      action :delete
-    end
+  if docker_conf['version'] && !docker_conf['version'].empty?
 
     docker_installation_package 'default' do
       version docker_conf['version']
       action act
       package_options docker_conf['package_options']
     end
+
   else
     docker_installation_package 'default' do
       action act
