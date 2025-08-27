@@ -65,7 +65,7 @@ nodes:
       - _id: "v05-compat-chef"
         _id_deprecated: 'v05-compat-0'
         name: teracy-dev-v05-compat
-        version: 15.8.23
+        version: 18.0.185
         type: chef_solo
         log_level: info
         enabled: true
