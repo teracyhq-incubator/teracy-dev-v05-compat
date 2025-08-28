@@ -1,5 +1,14 @@
 # Change Log
 
+## [v0.6.0][] (2025-08-28)
+
+- Bug Fixes:
+  + failed to install docker by default #51
+
+Details: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/5?closed=1
+
+
+
 ## [v0.5.0][] (2020-02-24)
 
 - Improvements:
