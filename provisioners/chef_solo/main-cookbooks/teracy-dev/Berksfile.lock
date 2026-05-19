@@ -8,7 +8,7 @@ DEPENDENCIES
   vim (~> 2.1.0)
 
 GRAPH
-  docker (11.9.2)
+  docker (11.9.3)
   docker_compose (0.2.0)
   magic_shell (1.0.0)
   vim (2.1.22)
