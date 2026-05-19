@@ -24,13 +24,12 @@
   "recipes": {
 
   },
-  "version": "11.9.3",
+  "version": "11.10.4",
   "source_url": "https://github.com/sous-chefs/docker",
   "issues_url": "https://github.com/sous-chefs/docker/issues",
   "privacy": false,
   "chef_versions": [
     [
-      "< 19.0",
       ">= 16.0"
     ]
   ],
