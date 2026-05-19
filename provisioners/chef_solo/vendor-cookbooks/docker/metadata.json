@@ -24,7 +24,7 @@
   "recipes": {
 
   },
-  "version": "11.9.2",
+  "version": "11.9.3",
   "source_url": "https://github.com/sous-chefs/docker",
   "issues_url": "https://github.com/sous-chefs/docker/issues",
   "privacy": false,
