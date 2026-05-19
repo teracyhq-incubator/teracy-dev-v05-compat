@@ -1,12 +1,22 @@
 # Change Log
 
+## [v0.7.0][] (2026-05-20)
+
+- Improvements:
+  + should clean up + upgrade existing cookbooks #58
+
+- Tasks:
+  + should fix CI errors #55
+
+Details: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/7?closed=1
+
+
 ## [v0.6.0][] (2025-08-28)
 
 - Bug Fixes:
   + failed to install docker by default #51
 
-Details: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/5?closed=1
-
+Details: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/6?closed=1
 
 
 ## [v0.5.0][] (2020-02-24)
@@ -68,3 +78,5 @@ Details: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/1
 [v0.3.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/3?closed=1
 [v0.4.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/4?closed=1
 [v0.5.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/5?closed=1
+[v0.6.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/6?closed=1
+[v0.7.0]: https://github.com/teracyhq-incubator/teracy-dev-v05-compat/milestone/7?closed=1
