@@ -34,38 +34,6 @@
 # NOTE: Don't use the same attributes from docker cookbook to avoid overlapping
 docker_conf = node['docker']
 
-def docker_compose_release
-  release = node['docker_compose']['version']
-
-  if release.empty?
-    result = Mixlib::ShellOut.new('curl -s https://api.github.com/repos/docker/compose/releases/latest | grep "tag_name" | cut -d\" -f4')
-
-    result.run_command
-
-    result.error!
-
-    release = result.stdout.strip
-
-    # TODO(hoatle): what if error or empty result? need to handle this case
-  end
-  node.override['docker_compose']['release'] = release
-  Chef::Log.info("docker_compose_release::release: #{release}")
-  release
-end
-
-def existing_docker_compose_version
-  existing_docker_compose_version_cmd = Mixlib::ShellOut.new("docker-compose version | head -1 | grep -o -E '[0-9].*' | cut -d ',' -f1")
-
-  existing_docker_compose_version_cmd.run_command
-
-  existing_version = ''
-
-  existing_version = existing_docker_compose_version_cmd.stdout.strip if existing_docker_compose_version_cmd.stderr.empty? && !existing_docker_compose_version_cmd.stdout.empty?
-  Chef::Log.debug("existing_docker_compose_version_cmd.stderr: #{existing_docker_compose_version_cmd.stderr}")
-  Chef::Log.debug("existing_docker_compose_version_cmd.stdout: #{existing_docker_compose_version_cmd.stdout}")
-  existing_version
-end
-
 if docker_conf['enabled'] == true
 
   act = :create
@@ -96,15 +64,4 @@ if docker_conf['enabled'] == true
     append true
   end
 
-  if node['docker_compose']['enabled'] == true
-    release = docker_compose_release()
-
-    existing_docker_compose_version = existing_docker_compose_version()
-    Chef::Log.debug("existing_docker_compose_version: #{existing_docker_compose_version}")
-    # empty could mean broken installation, it's safe to do clean up.
-    if existing_docker_compose_version.empty? || (existing_docker_compose_version != release)
-      include_recipe 'docker_compose::uninstallation'
-      include_recipe 'docker_compose::installation'
-    end
-  end
 end

@@ -102,12 +102,6 @@ nodes:
             #   - host: registry.gitlab.com
             #     username: ""
             #     password: ""
-          docker_compose:
-            version: '' # more: https://github.com/docker/compose/releases/
-            enabled: true # "docker" must be enabled to get this
-          docker_machine:
-            enabled: false
-            release: v0.8.2 # more: https://github.com/docker/machine/releases/
           teracy-dev:
             directories:
               - _id: "v05-compat-workspace"
